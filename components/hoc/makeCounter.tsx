@@ -1,5 +1,5 @@
-import * as React from "react";
-import { Subtract } from "utility-types";
+import * as React from 'react';
+import { Subtract } from 'utility-types';
 
 /**
  * コンポーネントに追加されるProps

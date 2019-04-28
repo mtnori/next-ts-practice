@@ -7,7 +7,10 @@
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
     "@zeit/next-typescript": "^1.1.1",
+    "downshift": "^3.2.10",
     "formik": "^1.5.3",
+    "lodash": "^4.17.11",
+    "mui-downshift": "^1.4.1",
     "next": "^8.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -19,6 +22,7 @@
     "start": "next start"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.123",
     "@types/next": "^8.0.4",
     "@types/react": "^16.8.14",
     "@types/react-dom": "^16.8.4",
