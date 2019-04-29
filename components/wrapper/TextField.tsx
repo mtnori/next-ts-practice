@@ -1,14 +1,14 @@
-import * as React from "react";
+import * as React from 'react';
 import MuiTextField, {
   TextFieldProps as MuiTextFieldProps
-} from "@material-ui/core/TextField";
-import { FieldProps, getIn } from "formik";
+} from '@material-ui/core/TextField';
+import { FieldProps, getIn } from 'formik';
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 export interface TextFieldProps
   extends FieldProps,
-    Omit<MuiTextFieldProps, "error" | "name" | "onChange" | "value"> {}
+    Omit<MuiTextFieldProps, 'error' | 'name' | 'onChange' | 'value'> {}
 
 export const fieldToTextField = ({
   field,
@@ -42,5 +42,4 @@ export const TextField: React.ComponentType<TextFieldProps> = ({
   <MuiTextField {...fieldToTextField(props)}>{children}</MuiTextField>
 );
 
-TextField.displayName = "FormikMaterialUITextField";
-
+TextField.displayName = 'FormikMaterialUITextField';

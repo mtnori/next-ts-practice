@@ -4,9 +4,16 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { FieldProps, getIn } from 'formik';
-import MuiDownshift, { MuiDownshiftProps } from 'mui-downshift';
+import MuiDownshift, { MuiDownshiftProps, InputProps } from 'mui-downshift';
+import { Omit } from '../types';
 
-export interface DownshiftProps extends FieldProps, MuiDownshiftProps {
+export interface DownshiftProps
+  extends FieldProps,
+    Omit<MuiDownshiftProps, 'getInputProps'> {
+  getInputProps?: () => Omit<
+    InputProps,
+    'error' | 'name' | 'onChange' | 'value' // fieldが持っている
+  >;
   inputValue: string;
   setFieldValue: any;
   selectedItem: { label: string; value: any } | null;
@@ -43,6 +50,8 @@ export const fieldToDownshift = ({
   const showError = getIn(touched, name) && !!fieldError;
 
   // valueとonChangeは使わないのでOmitしておく
+  // Inputのvalueは表示にしか使わないので、stateのinputValue値が入る
+  // Inputからstateを変化させてはいけないので、onChangeは不要
   const restField = _.omit(field, 'onChange', 'value');
   // Inputコンポーネント部分に適用されるProps
   const inputProps = getInputProps ? getInputProps() : {};
