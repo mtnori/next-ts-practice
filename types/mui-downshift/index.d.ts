@@ -1,12 +1,15 @@
 import React from 'react';
 import { DownshiftProps } from 'downshift';
+import { BaseTextFieldProps } from '@material-ui/core/TextField';
 
 declare module 'mui-downshift' {
+  interface InputProps extends BaseTextFieldProps {}
+
   export interface MuiDownshiftProps extends DownshiftProps<Item> {
     items: Array<Item>;
     getListItem?: Function;
     getListItemKey?: Function;
-    getInputProps?: Function;
+    getInputProps?: () => InputProps;
     showEmpty?: boolean;
     disabled?: boolean;
     includeFooter?: boolean;

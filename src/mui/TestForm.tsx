@@ -1,5 +1,11 @@
+/**
+ * @fileoverview Form component for mui formik wrapper
+ */
 import * as React from 'react';
+
 import { Field, withFormik, FormikProps } from 'formik';
+import * as Yup from 'yup';
+
 import Downshift from './Downshift';
 
 export interface FormValues {
@@ -22,7 +28,7 @@ const items = [
 ];
 
 const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
-  const { setFieldValue, handleSubmit, values } = props;
+  const { setFieldValue, handleSubmit, values, touched, errors } = props;
   return (
     <form onSubmit={handleSubmit}>
       <Field
@@ -31,8 +37,14 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
         component={Downshift}
         items={items}
         setFieldValue={setFieldValue}
+        getInputProps={() => ({
+          helperText: 'Helper Text',
+          error: true // trueにしても処理が上書きされているので使えない
+        })}
       />
       <div>{JSON.stringify(values)}</div>
+      <div>{JSON.stringify(touched)}</div>
+      <div>{JSON.stringify(errors)}</div>
     </form>
   );
 };
@@ -45,6 +57,11 @@ interface MyFormProps {
 const TestForm = withFormik<MyFormProps, FormValues>({
   mapPropsToValues: ({ initialCompanyId }) => ({
     companyId: initialCompanyId
+  }),
+  validationSchema: Yup.object().shape({
+    companyId: Yup.number()
+      .nullable()
+      .required('必須です')
   }),
   handleSubmit: (values, { props, setSubmitting }) => {
     setTimeout(() => {

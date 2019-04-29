@@ -1,13 +1,13 @@
 /**
- * @fileoverview FormikとMuiDownshiftのラッパー
+ * @fileoverview Formik wrapper of MuiDownshift component
  */
 import * as React from 'react';
 import _ from 'lodash';
-import { FieldProps } from 'formik';
+import { FieldProps, getIn } from 'formik';
 import MuiDownshift, { MuiDownshiftProps } from 'mui-downshift';
 
 export interface DownshiftProps extends FieldProps, MuiDownshiftProps {
-  filterInput: string;
+  inputValue: string;
   setFieldValue: any;
   selectedItem: { label: string; value: any } | null;
   handleSelect: (item: { label: string; value: any } | null) => void;
@@ -15,16 +15,17 @@ export interface DownshiftProps extends FieldProps, MuiDownshiftProps {
 
 export const fieldToDownshift = ({
   field,
-  form: { isSubmitting },
+  form,
   items = [],
   disabled = false,
-  filterInput,
+  inputValue,
   setFieldValue,
   selectedItem,
   handleSelect,
+  getInputProps,
   ...props
 }: DownshiftProps): MuiDownshiftProps => {
-  // 選択変更された場合、Formikのvalueを更新する
+  // 選択変更された場合、FormikのvalueとinputValueを両方更新する
   const onSelect = (item: { label: string; value: any } | null) => {
     if (item) {
       handleSelect(item);
@@ -35,17 +36,29 @@ export const fieldToDownshift = ({
     }
   };
 
-  const restField = _.omit(field, 'onChange', 'onBlur', 'value');
+  const { name } = field;
+  const { touched, errors, isSubmitting } = form;
+
+  const fieldError = getIn(errors, name);
+  const showError = getIn(touched, name) && !!fieldError;
+
+  // valueとonChangeは使わないのでOmitしておく
+  const restField = _.omit(field, 'onChange', 'value');
+  // Inputコンポーネント部分に適用されるProps
+  const inputProps = getInputProps ? getInputProps() : {};
 
   return {
+    ...props,
     items,
     selectedItem,
     onSelect,
     getInputProps: () => ({
+      ...inputProps,
       ...restField,
-      ...props,
-      value: filterInput,
-      disabled: isSubmitting || disabled
+      value: inputValue,
+      disabled: isSubmitting || disabled,
+      error: showError,
+      helperText: showError ? fieldError : inputProps.helperText
     })
   };
 };
@@ -53,7 +66,7 @@ export const fieldToDownshift = ({
 interface State {
   selectedItem: { label: string; value: any } | null; // 現在選択されているアイテム
   filteredItems: Array<{ label: string; value: any }>[]; // フィルタされたアイテムリスト
-  filterInput: string; // 入力項目値
+  inputValue: string; // 入力項目値
 }
 
 class Downshift extends React.Component<DownshiftProps, State> {
@@ -68,7 +81,7 @@ class Downshift extends React.Component<DownshiftProps, State> {
     this.state = {
       selectedItem: selectedItem || null,
       filteredItems: props.items,
-      filterInput: selectedItem ? selectedItem.label : ''
+      inputValue: selectedItem ? selectedItem.label : ''
     };
   }
 
@@ -78,7 +91,7 @@ class Downshift extends React.Component<DownshiftProps, State> {
       const filteredItems = items.filter(item =>
         item.label.toLowerCase().includes(changes.inputValue.toLowerCase())
       );
-      this.setState({ filteredItems, filterInput: changes.inputValue });
+      this.setState({ filteredItems, inputValue: changes.inputValue });
     }
   };
 
@@ -88,19 +101,19 @@ class Downshift extends React.Component<DownshiftProps, State> {
   handleSelect = (item: { label: string; value: any } | null) => {
     this.setState({
       selectedItem: item,
-      filterInput: item ? item.label : ''
+      inputValue: item ? item.label : ''
     });
   };
 
   render() {
     // itemsはフィルタした値を渡す
-    const { filteredItems, filterInput, selectedItem } = this.state;
+    const { filteredItems, inputValue, selectedItem } = this.state;
     return (
       <MuiDownshift
         {...fieldToDownshift({
           ...this.props,
           items: filteredItems,
-          filterInput,
+          inputValue,
           selectedItem,
           handleSelect: this.handleSelect
         })}

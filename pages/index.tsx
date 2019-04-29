@@ -1,5 +1,5 @@
 import * as React from 'react';
-import TestForm from '../components/mui/TestForm';
+import TestForm from '../src/mui/TestForm';
 
 const Page: React.FC = () => (
   <>
