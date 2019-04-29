@@ -1,4 +1,5 @@
 import * as React from 'react';
+import withAuthSync from '../src/hoc/withAuth';
 import TestForm from '../src/mui/TestForm';
 
 const Page: React.FC = () => (
@@ -11,4 +12,4 @@ const Page: React.FC = () => (
     />
   </>
 );
-export default Page;
+export default withAuthSync(Page);
