@@ -3,9 +3,14 @@
  */
 import * as React from 'react';
 import withRoot from '../src/hoc/withRoot';
-import TestForm from '../src/mui/TestForm';
+import TestForm from '../src/components/TestForm';
+import { InjectedProps as AuthInjectedProps } from '../src/hoc/withAuth';
+import { InjectedProps as PermissionInjectedProps } from '../src/hoc/withPermission';
 
-const Page: React.FC = () => (
+// Props
+interface Props extends AuthInjectedProps, PermissionInjectedProps {}
+
+const Page: React.FC<Props> = () => (
   <>
     <TestForm
       initialCompanyId={1}

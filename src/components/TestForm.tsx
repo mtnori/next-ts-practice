@@ -6,7 +6,9 @@ import * as React from 'react';
 import { Field, withFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
-import Downshift from './Downshift';
+import MenuItem from '@material-ui/core/MenuItem';
+import { TextField } from 'formik-material-ui';
+import Downshift from '../mui/Downshift';
 
 export interface FormValues {
   companyId: number | null;
@@ -16,7 +18,7 @@ export interface OtherProps {
   submit: (values: FormValues) => void;
 }
 
-const items = [
+const companies = [
   {
     label: 'aaa',
     value: 1
@@ -27,21 +29,37 @@ const items = [
   }
 ];
 
+const itemsToMenuItems = (items: { label: string; value: any }[]) =>
+  items.map(item => (
+    <MenuItem key={item.value} value={item.value}>
+      {item.label}
+    </MenuItem>
+  ));
+
 const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
   const { setFieldValue, handleSubmit, values, touched, errors } = props;
   return (
     <form onSubmit={handleSubmit}>
       <Field
         name="companyId"
-        label="企業名"
+        label="Downshift"
         component={Downshift}
-        items={items}
+        items={companies}
         setFieldValue={setFieldValue}
         getInputProps={() => ({
           helperText: 'Helper Text',
-          error: true // trueにしても処理が上書きされているので使えない
+          required: true
         })}
       />
+      <Field
+        name="companyId"
+        label="Select"
+        select
+        component={TextField}
+        InputLabelProps={{ shrink: true }}
+      >
+        {itemsToMenuItems(companies)}
+      </Field>
       <div>{JSON.stringify(values)}</div>
       <div>{JSON.stringify(touched)}</div>
       <div>{JSON.stringify(errors)}</div>

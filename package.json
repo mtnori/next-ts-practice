@@ -10,6 +10,7 @@
     "@zeit/next-typescript": "^1.1.1",
     "downshift": "^2.2.3",
     "formik": "^1.5.3",
+    "formik-material-ui": "^0.0.16",
     "immutable": "^4.0.0-rc.12",
     "isomorphic-unfetch": "^3.0.0",
     "js-cookie": "^2.2.0",
@@ -59,6 +60,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
+    "json-server": "^0.14.2",
     "prettier": "^1.17.0",
     "typescript": "^3.4.5"
   }

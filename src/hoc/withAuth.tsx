@@ -7,13 +7,12 @@ import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
 import { Subtract } from 'utility-types';
 import { NextComponentType } from 'next';
-import { Token } from '../types';
 
 export interface InjectedProps {
-  token: Token;
+  token: string;
 }
 
-export const login = async ({ token }: { token: Token }) => {
+export const login = async ({ token }: { token: string }) => {
   cookie.set('token', token, { expires: 1 });
   Router.push('/');
 };
@@ -53,7 +52,7 @@ const getDisplayName = (Component: any) =>
 
 const withAuthSync = <P extends InjectedProps>(
   WrappedComponent: NextComponentType<P, any, any>
-) =>
+): NextComponentType<Subtract<P, InjectedProps>, any, any> =>
   class extends React.Component<Subtract<P, InjectedProps>> {
     static displayName = `withAuthSync(${getDisplayName(WrappedComponent)})`;
 

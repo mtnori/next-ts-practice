@@ -2,8 +2,11 @@
  * @fileoverview Authorization HOC
  */
 import * as React from 'react';
+import nextCookie from 'next-cookies';
 import { NextComponentType } from 'next';
 import { Subtract } from 'utility-types';
+
+import authAPI from '../api/auth';
 
 export interface Options {
   permissions?: string[];
@@ -28,31 +31,40 @@ const withPermission = ({ permissions = [] }: Options) => <
   P extends InjectedProps
 >(
   WrappedComponent: NextComponentType<P, any, any>
-) =>
+): NextComponentType<Subtract<P, InjectedProps>, any, any> =>
   class extends React.Component<Subtract<P, InjectedProps>, State> {
     static displayName = `withPermission(${getDisplayName(WrappedComponent)})`;
 
-    state = {
-      isAuthorized: false
-    };
-
     static async getInitialProps(ctx: any) {
-      // TODO
-      // Auth stateへ認証情報を保存して、WrappedComponentへ渡す
-      // withAppbar HOCでもpermissionを使うが、そっちはそっちでAPIを投げて取得する？
-      // Auth.permissionsへ情報が含まれていればWrappedComponentを表示し、
-      // そうでなければ権限なしページへ遷移させる
-      // Stateに持たせて処理したい
-      // 一旦、Reduxに持たせて引っ張ってくるのは面倒・・・
+      const { token } = nextCookie(ctx);
+      const auth = token && (await authAPI.load(token));
+
       const componentProps =
         WrappedComponent.getInitialProps &&
         (await WrappedComponent.getInitialProps(ctx));
 
-      return { ...componentProps };
+      return { ...componentProps, auth };
+    }
+
+    constructor(props: P) {
+      super(props);
+
+      let isAuthorized = false;
+      permissions.forEach(permission => {
+        props.auth.permissions.forEach(authPermission => {
+          if (authPermission === permission) {
+            isAuthorized = true;
+          }
+        });
+      });
+      this.state = {
+        isAuthorized
+      };
     }
 
     render() {
       return <WrappedComponent {...this.props as P} />;
     }
-  };
+  } as NextComponentType<Subtract<P, InjectedProps>, any, any>;
+
 export default withPermission;

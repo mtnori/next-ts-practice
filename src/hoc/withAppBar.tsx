@@ -14,7 +14,7 @@ const getDisplayName = (Component: any) =>
 
 const withAppBar = <P extends object>(
   WrappedComponent: NextComponentType<P, any, any>
-) =>
+): NextComponentType<P, any, any> =>
   class extends React.Component<P> {
     static displayName = `withAppBar(${getDisplayName(WrappedComponent)})`;
 
