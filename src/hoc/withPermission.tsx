@@ -3,9 +3,17 @@
  */
 import * as React from 'react';
 import { NextComponentType } from 'next';
+import { Subtract } from 'utility-types';
 
-interface Options {
+export interface Options {
   permissions?: string[];
+}
+
+export interface InjectedProps {
+  auth: {
+    username: string;
+    permissions: string[];
+  };
 }
 
 interface State {
@@ -16,10 +24,12 @@ interface State {
 const getDisplayName = (Component: any) =>
   Component.displayName || Component.name || 'Component';
 
-const withPermission = ({ permissions = [] }: Options) => <P extends object>(
+const withPermission = ({ permissions = [] }: Options) => <
+  P extends InjectedProps
+>(
   WrappedComponent: NextComponentType<P, any, any>
 ) =>
-  class extends React.Component<P, State> {
+  class extends React.Component<Subtract<P, InjectedProps>, State> {
     static displayName = `withPermission(${getDisplayName(WrappedComponent)})`;
 
     state = {

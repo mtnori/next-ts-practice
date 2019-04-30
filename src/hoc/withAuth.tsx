@@ -9,7 +9,7 @@ import { Subtract } from 'utility-types';
 import { NextComponentType } from 'next';
 import { Token } from '../types';
 
-interface InjectedProps {
+export interface InjectedProps {
   token: Token;
 }
 
