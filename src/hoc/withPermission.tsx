@@ -1,5 +1,5 @@
 /**
- * @fileoverview 認可HOC
+ * @fileoverview Authorization HOC
  */
 import * as React from 'react';
 import { NextComponentType } from 'next';
