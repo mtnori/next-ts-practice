@@ -4,13 +4,16 @@ import Head from 'next/head';
 
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
+import { serialize, deserialize } from 'json-immutable';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
-import getPageContext from '../src/getPageContext';
 
-class MyApp extends App {
+import getPageContext from '../src/getPageContext';
+import makeStore from '../src/redux/store';
+
+class MyApp extends App<any> {
   constructor(props: any, context: any) {
     super(props, context);
     this.pageContext = getPageContext();
@@ -34,7 +37,7 @@ class MyApp extends App {
   pageContext: any;
 
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, store } = this.props;
     return (
       <Container>
         <Provider store={store}>
@@ -63,4 +66,7 @@ class MyApp extends App {
   }
 }
 
-export default MyApp;
+export default withRedux(makeStore, {
+  serializeState: (state: any) => serialize(state),
+  deserializeState: (state: any) => deserialize(state)
+})(MyApp);
