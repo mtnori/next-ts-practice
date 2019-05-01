@@ -739,6 +739,18 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@date-io/core@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@date-io/core/-/core-1.2.0.tgz#da3a46999b8f58dc1d471c4f5373c5bff44b5794"
+  integrity sha512-lp77u8Q0ZP9a8M8CjskVZWxa5U4ixVC7mpsdPKr9kZEYlDPVtk1BXkJrr/Fz4Yt37jz8Al5zYOyr4Q+SMsJwCg==
+
+"@date-io/date-fns@^1.3.5":
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/@date-io/date-fns/-/date-fns-1.3.5.tgz#a4815500211c0ca7151729c17e12ba46520a373f"
+  integrity sha512-PVmvjF9ZsyK2nItwS+0iUTKadvZP7o2vWRRMwdcwo6HKMenWjgU3KbTyiKLoZuG0IlON4k9v8GRHvI0VVFxziA==
+  dependencies:
+    "@date-io/core" "^1.2.0"
+
 "@date-io/moment@^1.3.5":
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/@date-io/moment/-/moment-1.3.5.tgz#e5bf3837cbd3f5f5f5d7f49d8549e4118ea75f8d"
@@ -2161,6 +2173,11 @@ dashdash@^1.12.0:
   integrity sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA=
   dependencies:
     assert-plus "^1.0.0"
+
+date-fns@^2.0.0-alpha.27:
+  version "2.0.0-alpha.27"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.0.0-alpha.27.tgz#5ecd4204ef0e7064264039570f6e8afbc014481c"
+  integrity sha512-cqfVLS+346P/Mpj2RpDrBv0P4p2zZhWWvfY5fuWrXNR/K38HaAGEkeOwb47hIpQP9Jr/TIxjZ2/sNMQwdXuGMg==
 
 date-now@^0.1.4:
   version "0.1.4"

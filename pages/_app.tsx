@@ -10,8 +10,9 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
 
-import { MuiPickersUtilsProvider } from 'material-ui-pickers';
-import MomentUtils from '@date-io/moment';
+import DateFnsUtils from '@date-io/date-fns';
+import MuiPickersUtilsProvider from 'material-ui-pickers/MuiPickersUtilsProvider';
+import jaLocale from 'date-fns/locale/ja';
 
 import getPageContext from '../src/getPageContext';
 import makeStore from '../src/redux/store';
@@ -43,11 +44,11 @@ class MyApp extends App<any> {
     const { Component, pageProps, store } = this.props;
     return (
       <Container>
+        <Head>
+          <title>My page</title>
+        </Head>
         <Provider store={store}>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-            <Head>
-              <title>My page</title>
-            </Head>
+          <MuiPickersUtilsProvider utils={DateFnsUtils} locale={jaLocale}>
             {/* Wrap every page in Jss and Theme providers */}
             <JssProvider
               registry={this.pageContext.sheetsRegistry}

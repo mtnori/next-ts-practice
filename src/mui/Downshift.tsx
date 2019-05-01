@@ -35,9 +35,9 @@ export const fieldToDownshift = ({
   // 選択変更された場合、FormikのvalueとinputValueを両方更新する
   const onSelect = (item: { label: string; value: any } | null) => {
     if (item) {
-      setFieldValue(field.name, item.value);
+      setFieldValue(name, item.value);
     } else {
-      setFieldValue(field.name, null);
+      setFieldValue(name, null);
     }
   };
 
@@ -68,6 +68,8 @@ interface State {
 }
 
 class Downshift extends React.Component<DownshiftProps, State> {
+  static displayName = 'FormikMaterialUIDownshift';
+
   constructor(props: DownshiftProps) {
     super(props);
 
