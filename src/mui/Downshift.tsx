@@ -14,7 +14,6 @@ export interface DownshiftProps
     InputProps,
     'error' | 'name' | 'onChange' | 'value' // fieldが持っているのでOmit
   >;
-  setFieldValue: any;
 }
 
 /**
@@ -27,10 +26,12 @@ export const fieldToDownshift = ({
   form,
   items = [],
   disabled = false,
-  setFieldValue,
   getInputProps,
   ...props
 }: DownshiftProps): MuiDownshiftProps => {
+  const { name } = field;
+  const { touched, errors, isSubmitting, setFieldValue } = form;
+
   // 選択変更された場合、FormikのvalueとinputValueを両方更新する
   const onSelect = (item: { label: string; value: any } | null) => {
     if (item) {
@@ -39,9 +40,6 @@ export const fieldToDownshift = ({
       setFieldValue(field.name, null);
     }
   };
-
-  const { name } = field;
-  const { touched, errors, isSubmitting } = form;
 
   const fieldError = getIn(errors, name);
   const showError = getIn(touched, name) && !!fieldError;

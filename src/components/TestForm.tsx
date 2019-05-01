@@ -38,14 +38,13 @@ const itemsToMenuItems = (items: { label: string; value: any }[]) =>
   ));
 
 const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
-  const { setFieldValue, handleSubmit, values, touched, errors } = props;
+  const { handleSubmit, values, touched, errors } = props;
   return (
     <form onSubmit={handleSubmit}>
       <Field
         name="companyId"
         component={Downshift}
         items={companies}
-        setFieldValue={setFieldValue}
         getInputProps={() => ({
           helperText: 'Helper Text',
           required: true,

@@ -10,6 +10,9 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
 
+import { MuiPickersUtilsProvider } from 'material-ui-pickers';
+import MomentUtils from '@date-io/moment';
+
 import getPageContext from '../src/getPageContext';
 import makeStore from '../src/redux/store';
 
@@ -41,25 +44,27 @@ class MyApp extends App<any> {
     return (
       <Container>
         <Provider store={store}>
-          <Head>
-            <title>My page</title>
-          </Head>
-          {/* Wrap every page in Jss and Theme providers */}
-          <JssProvider
-            registry={this.pageContext.sheetsRegistry}
-            generateClassName={this.pageContext.generateClassName}
-          >
-            <MuiThemeProvider
-              theme={this.pageContext.theme}
-              sheetsManager={this.pageContext.sheetsManager}
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <Head>
+              <title>My page</title>
+            </Head>
+            {/* Wrap every page in Jss and Theme providers */}
+            <JssProvider
+              registry={this.pageContext.sheetsRegistry}
+              generateClassName={this.pageContext.generateClassName}
             >
-              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-              <CssBaseline />
-              {/* Pass pageContext to the _document though the renderPage enhancer
+              <MuiThemeProvider
+                theme={this.pageContext.theme}
+                sheetsManager={this.pageContext.sheetsManager}
+              >
+                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                <CssBaseline />
+                {/* Pass pageContext to the _document though the renderPage enhancer
                   to render collected styles on server-side. */}
-              <Component pageContext={this.pageContext} {...pageProps} />
-            </MuiThemeProvider>
-          </JssProvider>
+                <Component pageContext={this.pageContext} {...pageProps} />
+              </MuiThemeProvider>
+            </JssProvider>
+          </MuiPickersUtilsProvider>
         </Provider>
       </Container>
     );
