@@ -20,4 +20,4 @@ const Page: React.FC<Props> = () => (
     />
   </>
 );
-export default withRoot({})(Page);
+export default withRoot({ permissions: ['VIEW'] })(Page);

@@ -43,13 +43,13 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
     <form onSubmit={handleSubmit}>
       <Field
         name="companyId"
-        label="Downshift"
         component={Downshift}
         items={companies}
         setFieldValue={setFieldValue}
         getInputProps={() => ({
           helperText: 'Helper Text',
-          required: true
+          required: true,
+          label: 'Downshift'
         })}
       />
       <Field
@@ -58,6 +58,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
         select
         component={TextField}
         InputLabelProps={{ shrink: true }}
+        required
       >
         {itemsToMenuItems(companies)}
       </Field>
