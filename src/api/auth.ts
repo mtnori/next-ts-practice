@@ -14,6 +14,7 @@ async function login(
   password: string
 ): Promise<{ token: string }> {
   const response = await fetch('http://localhost:3030/login', {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },

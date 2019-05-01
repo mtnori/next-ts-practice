@@ -52,7 +52,7 @@ const getDisplayName = (Component: any) =>
 
 const withAuthSync = <P extends InjectedProps>(
   WrappedComponent: NextComponentType<P, any, any>
-): NextComponentType<Subtract<P, InjectedProps>, any, any> =>
+) =>
   class extends React.Component<Subtract<P, InjectedProps>> {
     static displayName = `withAuthSync(${getDisplayName(WrappedComponent)})`;
 

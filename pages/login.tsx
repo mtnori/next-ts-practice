@@ -3,15 +3,11 @@
  */
 import React from 'react';
 
-import withRoot from '../src/hoc/withRoot';
-import { login, InjectedProps as AuthInjectedProps } from '../src/hoc/withAuth';
+import withAppBar from '../src/hoc/withAppBar';
+import { login } from '../src/hoc/withAuth';
 import authAPI from '../src/api/auth';
-import { InjectedProps as PermissionInjectedProps } from '../src/hoc/withPermission';
 
-// Props
-interface Props extends AuthInjectedProps, PermissionInjectedProps {}
-
-class Login extends React.Component<Props> {
+class Login extends React.Component<{}> {
   handleSubmit = async (event: any) => {
     event.preventDefault();
     const { token } = await authAPI.login('username', 'password');
@@ -26,4 +22,4 @@ class Login extends React.Component<Props> {
     );
   }
 }
-export default withRoot({})(Login);
+export default withAppBar(Login);

@@ -47,8 +47,6 @@ export const fieldToDownshift = ({
   const showError = getIn(touched, name) && !!fieldError;
 
   // valueとonChangeは使わないのでOmitしておく
-  // Inputのvalueは表示にしか使わないので、stateのinputValue値が入る
-  // Inputからstateを変化させてはいけないので、onChangeは不要
   const restField = _.omit(field, 'onChange', 'value');
   // Inputコンポーネント部分に適用されるProps
   const inputProps = getInputProps ? getInputProps() : {};
@@ -74,8 +72,19 @@ interface State {
 class Downshift extends React.Component<DownshiftProps, State> {
   constructor(props: DownshiftProps) {
     super(props);
+
+    // フィルタされたitemsを取得してstateに保存する
+    const {
+      field: { value },
+      items
+    } = props;
+    let filteredItems = items;
+    if (value) {
+      filteredItems = items.filter(item => item.value === value);
+    }
+
     this.state = {
-      filteredItems: props.items
+      filteredItems
     };
   }
 

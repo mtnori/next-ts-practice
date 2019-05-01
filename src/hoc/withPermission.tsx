@@ -31,7 +31,7 @@ const withPermission = ({ permissions = [] }: Options) => <
   P extends InjectedProps
 >(
   WrappedComponent: NextComponentType<P, any, any>
-): NextComponentType<Subtract<P, InjectedProps>, any, any> =>
+) =>
   class extends React.Component<Subtract<P, InjectedProps>, State> {
     static displayName = `withPermission(${getDisplayName(WrappedComponent)})`;
 
@@ -65,6 +65,6 @@ const withPermission = ({ permissions = [] }: Options) => <
     render() {
       return <WrappedComponent {...this.props as P} />;
     }
-  } as NextComponentType<Subtract<P, InjectedProps>, any, any>;
+  };
 
 export default withPermission;

@@ -17,4 +17,5 @@ const withRoot = ({ permissions = [] }: Options) => <P extends InjectedProps>(
   WrappedComponent: NextComponentType<P, any, any>
 ) =>
   withAppBar(withPermission({ permissions })(withAuthSync(WrappedComponent)));
+
 export default withRoot;

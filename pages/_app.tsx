@@ -68,5 +68,5 @@ class MyApp extends App<any> {
 
 export default withRedux(makeStore, {
   serializeState: (state: any) => serialize(state),
-  deserializeState: (state: any) => deserialize(state)
+  deserializeState: (state: any) => (state ? deserialize(state) : state)
 })(MyApp);

@@ -12,6 +12,7 @@ import Downshift from '../mui/Downshift';
 
 export interface FormValues {
   companyId: number | null;
+  selectValue: number | null;
 }
 
 export interface OtherProps {
@@ -52,7 +53,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
         })}
       />
       <Field
-        name="companyId"
+        name="selectValue"
         label="Select"
         select
         component={TextField}
@@ -74,7 +75,8 @@ interface MyFormProps {
 
 const TestForm = withFormik<MyFormProps, FormValues>({
   mapPropsToValues: ({ initialCompanyId }) => ({
-    companyId: initialCompanyId
+    companyId: initialCompanyId,
+    selectValue: initialCompanyId
   }),
   validationSchema: Yup.object().shape({
     companyId: Yup.number()

@@ -1,3 +1,7 @@
 {
-  "auth": [
-    { "id": 1, "name": "noriyuki", "permission
+  "get_loadAuth": { "id": 1, "name": "noriyuki", "permission": [
+      "VIEW"
+    ]
+  },
+  "post_login": { "token": "1234567890" }
+}
