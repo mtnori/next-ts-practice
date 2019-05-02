@@ -19,4 +19,6 @@ const defaultValues = {
 export type UserRecord = RecordOf<UserProps>;
 
 const makeUser = Record(defaultValues);
-export default makeUser;
+export default {
+  makeUser
+};

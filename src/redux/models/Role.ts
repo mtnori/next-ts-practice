@@ -16,4 +16,6 @@ const defaultValues = {
 export type RoleRecord = RecordOf<RoleProps>;
 
 const makeRole = Record(defaultValues);
-export default makeRole;
+export default {
+  makeRole
+};

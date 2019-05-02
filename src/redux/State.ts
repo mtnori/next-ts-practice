@@ -11,14 +11,23 @@ interface ImmutableMap<T> extends Map<string, any> {
 }
 
 interface User {
+  id: number;
   name: string;
   roles: string[];
 }
 
 type UserMap = ImmutableMap<User>;
 
+interface Role {
+  id: number;
+  name: string;
+}
+
+type RoleMap = ImmutableMap<Role>;
+
 interface Entities {
   users: UserMap;
+  roles: RoleMap;
 }
 
 type EntitiesMap = ImmutableMap<Entities>;
