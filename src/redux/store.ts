@@ -9,7 +9,7 @@ import rootReducer from './reducers';
  * @param {boolean} options.debug User-defined debug mode param
  * @param {string} options.storeKey This key will be used to preserve store in global namespace for safe HMR
  */
-const configureStore = (initialState: any = Immutable.Map({})) => {
+const configureStore = (initialState: any = Immutable.Map()) => {
   const store = createStore(rootReducer, initialState);
   return store;
 };

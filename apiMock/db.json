@@ -3,5 +3,25 @@
       "VIEW"
     ]
   },
-  "post_login": { "token": "1234567890" }
+  "post_login": { "token": "1234567890" },
+  "users": [{
+    "id": 1,
+    "name": "noriyuki",
+    "roles": [
+      {"id": 1,
+        "name": "administrator"
+      },
+      {"id": 2,
+        "name": "manager"
+      }
+    ]
+  },{
+    "id": 2,
+    "name": "motoyoshi",
+    "roles": [
+      {"id": 2,
+        "name": "manager"
+      }
+    ]
+  }]
 }

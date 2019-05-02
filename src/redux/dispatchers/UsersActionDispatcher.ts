@@ -1,4 +1,9 @@
-import { fetch, fetchSuccess } from '../actions/users';
+/**
+ * @fileoverview Users action dispatcher
+ */
+import { normalize } from 'normalizr';
+import schemas from '../schemas';
+import { fetch, fetchSuccess, fetchFailure } from '../actions/users';
 import userApi from '../../api/users';
 
 export default class UsersActionDispatcher {
@@ -8,10 +13,17 @@ export default class UsersActionDispatcher {
     this.dispatch = dispatch;
   }
 
-  async getUser(id: number): Promise<void> {
+  async getUsers(): Promise<void> {
     this.dispatch(fetch()); // Fetch start
-    const user = await userApi.getUser({ id }); // call api
-    // TODO ここで正規化する
-    this.dispatch(fetchSuccess(user)); // Fetch success
+
+    const response = await userApi.getUsers(); // Call api
+    const { payload, error } = response;
+
+    if (payload && !error) {
+      const normalizedData = normalize(payload, [schemas.user]); // Normalize
+      this.dispatch(fetchSuccess(normalizedData)); // Fetch success
+    } else if (error) {
+      this.dispatch(fetchFailure(error)); // Fetch failure
+    }
   }
 }

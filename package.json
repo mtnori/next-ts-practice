@@ -28,6 +28,7 @@
     "next": "^8.1.0",
     "next-cookies": "^1.1.2",
     "next-redux-wrapper": "^3.0.0-alpha.2",
+    "normalizr": "^3.3.0",
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",

@@ -18,7 +18,7 @@ export function fetchSuccess(payload: Payload) {
   };
 }
 
-export function fetchFailure(error: Object) {
+export function fetchFailure(error: Error) {
   return {
     type: users.FETCH_FAILURE,
     error
