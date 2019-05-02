@@ -67,6 +67,8 @@ export const fieldToDownshift = ({
 
 interface State {
   filteredItems: Array<{ label: string; value: any }>; // フィルタされたアイテムリスト
+  selectedItem: { label: string; value: any } | null;
+  inputValue: string;
 }
 
 class Downshift extends React.Component<DownshiftProps, State> {
@@ -85,9 +87,47 @@ class Downshift extends React.Component<DownshiftProps, State> {
       filteredItems = items.filter(item => item.value === value);
     }
 
+    const selectedItem = filteredItems.find(item => item.value === value);
+
+    const inputValue = selectedItem ? selectedItem.label : '';
+
     this.state = {
-      filteredItems
+      filteredItems,
+      selectedItem,
+      inputValue
     };
+  }
+
+  static getDerivedStateFromProps(nextProps: DownshiftProps, prevState: State) {
+    const {
+      items,
+      field: { value }
+    } = nextProps;
+
+    /**
+     * 外からvalueが変化した場合、表示を更新する
+     */
+    if (
+      (prevState.selectedItem !== null &&
+        value !== prevState.selectedItem.value) ||
+      (!prevState.selectedItem == null && value !== null)
+    ) {
+      let filteredItems = items;
+      let selectedItem = null;
+
+      if (value) {
+        filteredItems = items.filter(item => item.value === value);
+        selectedItem = filteredItems.find(item => item.value === value);
+      }
+
+      const inputValue = selectedItem ? selectedItem.label : '';
+      return {
+        filteredItems,
+        selectedItem,
+        inputValue
+      };
+    }
+    return null;
   }
 
   handleStateChange = (changes: any) => {
@@ -96,28 +136,22 @@ class Downshift extends React.Component<DownshiftProps, State> {
       const filteredItems = items.filter(item =>
         item.label.toLowerCase().includes(changes.inputValue.toLowerCase())
       );
-      this.setState({ filteredItems });
+      this.setState({ ...changes, filteredItems });
+    } else {
+      this.setState(changes);
     }
   };
 
   render() {
     // itemsはフィルタした値を渡す
-    const { filteredItems } = this.state;
-
-    // Formikのvalueから初期値を取得する
-    const {
-      field: { value }
-    } = this.props;
-
-    const defaultSelectedItem = filteredItems.find(
-      item => item.value === value
-    );
+    const { filteredItems, selectedItem, inputValue } = this.state;
 
     return (
       <MuiDownshift
         {...fieldToDownshift({
           ...this.props,
-          defaultSelectedItem,
+          selectedItem,
+          inputValue,
           items: filteredItems,
           onStateChange: this.handleStateChange
         })}

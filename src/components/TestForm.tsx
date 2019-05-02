@@ -54,6 +54,16 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
           label: 'Downshift'
         })}
       />
+      <Field
+        name="companyId"
+        label="Select"
+        select
+        component={TextField}
+        InputLabelProps={{ shrink: true }}
+        required
+      >
+        {itemsToMenuItems(companies)}
+      </Field>
       {/* Select */}
       <Field
         name="selectValue"
