@@ -10,6 +10,7 @@ import { Omit } from '../types';
 export interface DownshiftProps
   extends FieldProps,
     Omit<MuiDownshiftProps, 'getInputProps'> {
+  handleSelect: (item: { label: string; value: any } | null) => void;
   getInputProps?: () => Omit<
     InputProps,
     'error' | 'name' | 'onChange' | 'value' // fieldが持っているのでOmit
@@ -27,6 +28,7 @@ export const fieldToDownshift = ({
   items = [],
   disabled = false,
   focusOnClear = true,
+  handleSelect,
   getInputProps,
   ...props
 }: DownshiftProps): MuiDownshiftProps => {
@@ -36,8 +38,10 @@ export const fieldToDownshift = ({
   // 選択変更された場合、FormikのvalueとinputValueを両方更新する
   const onSelect = (item: { label: string; value: any } | null) => {
     if (item) {
+      handleSelect(item);
       setFieldValue(name, item.value);
     } else {
+      handleSelect(null);
       setFieldValue(name, null);
     }
   };
@@ -66,7 +70,6 @@ export const fieldToDownshift = ({
 };
 
 interface State {
-  filteredItems: Array<{ label: string; value: any }>; // フィルタされたアイテムリスト
   selectedItem: { label: string; value: any } | null;
   inputValue: string;
 }
@@ -77,22 +80,14 @@ class Downshift extends React.Component<DownshiftProps, State> {
   constructor(props: DownshiftProps) {
     super(props);
 
-    // フィルタされたitemsを取得してstateに保存する
     const {
       field: { value },
       items
     } = props;
-    let filteredItems = items;
-    if (value) {
-      filteredItems = items.filter(item => item.value === value);
-    }
-
-    const selectedItem = filteredItems.find(item => item.value === value);
-
+    const selectedItem = items.find(item => item.value === value);
     const inputValue = selectedItem ? selectedItem.label : '';
 
     this.state = {
-      filteredItems,
       selectedItem,
       inputValue
     };
@@ -110,19 +105,16 @@ class Downshift extends React.Component<DownshiftProps, State> {
     if (
       (prevState.selectedItem !== null &&
         value !== prevState.selectedItem.value) ||
-      (!prevState.selectedItem == null && value !== null)
+      (prevState.selectedItem == null && value !== null)
     ) {
-      let filteredItems = items;
       let selectedItem = null;
 
       if (value) {
-        filteredItems = items.filter(item => item.value === value);
-        selectedItem = filteredItems.find(item => item.value === value);
+        selectedItem = items.find(item => item.value === value);
       }
 
       const inputValue = selectedItem ? selectedItem.label : '';
       return {
-        filteredItems,
         selectedItem,
         inputValue
       };
@@ -131,20 +123,41 @@ class Downshift extends React.Component<DownshiftProps, State> {
   }
 
   handleStateChange = (changes: any) => {
-    const { items } = this.props;
     if (typeof changes.inputValue === 'string') {
-      const filteredItems = items.filter(item =>
-        item.label.toLowerCase().includes(changes.inputValue.toLowerCase())
-      );
-      this.setState({ ...changes, filteredItems });
-    } else {
-      this.setState(changes);
+      this.setState({
+        inputValue: changes.inputValue
+      });
     }
   };
 
+  /**
+   * アイテムを選択したときのState変更処理
+   */
+  handleSelect = (item: { label: string; value: any } | null) => {
+    const inputValue = item ? item.label : '';
+    this.setState({
+      selectedItem: item,
+      inputValue
+    });
+  };
+
+  getFilteredItems = (
+    items: { label: string; value: any }[],
+    inputValue: string
+  ) => {
+    let filteredItems = items;
+    if (inputValue) {
+      filteredItems = items.filter(v =>
+        v.label.toLowerCase().includes(inputValue.toLowerCase())
+      );
+    }
+    return filteredItems;
+  };
+
   render() {
+    const { items } = this.props;
     // itemsはフィルタした値を渡す
-    const { filteredItems, selectedItem, inputValue } = this.state;
+    const { selectedItem, inputValue } = this.state;
 
     return (
       <MuiDownshift
@@ -152,7 +165,8 @@ class Downshift extends React.Component<DownshiftProps, State> {
           ...this.props,
           selectedItem,
           inputValue,
-          items: filteredItems,
+          items: this.getFilteredItems(items, inputValue),
+          handleSelect: this.handleSelect,
           onStateChange: this.handleStateChange
         })}
       />
