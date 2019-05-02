@@ -122,6 +122,9 @@ class Downshift extends React.Component<DownshiftProps, State> {
     return null;
   }
 
+  /**
+   * Inputコンポーネントへ入力を行ったとき
+   */
   handleStateChange = (changes: any) => {
     if (typeof changes.inputValue === 'string') {
       this.setState({
@@ -141,6 +144,9 @@ class Downshift extends React.Component<DownshiftProps, State> {
     });
   };
 
+  /**
+   * フィルタしたアイテムリストを取得する
+   */
   getFilteredItems = (
     items: { label: string; value: any }[],
     inputValue: string
@@ -156,7 +162,6 @@ class Downshift extends React.Component<DownshiftProps, State> {
 
   render() {
     const { items } = this.props;
-    // itemsはフィルタした値を渡す
     const { selectedItem, inputValue } = this.state;
 
     return (
