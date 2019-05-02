@@ -2,20 +2,34 @@ import React from 'react';
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 
+// Redux
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 import { serialize, deserialize } from 'json-immutable';
 
+// Material UI
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
 
+// Material UI Pickers
 import DateFnsUtils from '@date-io/date-fns';
 import MuiPickersUtilsProvider from 'material-ui-pickers/MuiPickersUtilsProvider';
 import jaLocale from 'date-fns/locale/ja';
 
+// NProgress
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+import Router from 'next/router';
+
 import getPageContext from '../src/getPageContext';
 import makeStore from '../src/redux/store';
+
+Router.events.on('routeChangeStart', () => {
+  NProgress.start();
+});
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 class MyApp extends App<any> {
   constructor(props: any, context: any) {
