@@ -26,6 +26,7 @@ export const fieldToDownshift = ({
   form,
   items = [],
   disabled = false,
+  focusOnClear = true,
   getInputProps,
   ...props
 }: DownshiftProps): MuiDownshiftProps => {
@@ -53,6 +54,7 @@ export const fieldToDownshift = ({
     ...props,
     items,
     onSelect,
+    focusOnClear,
     getInputProps: () => ({
       ...restField,
       ...inputProps,
