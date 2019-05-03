@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '../mui/TextField';
+import NumberField from '../mui/NumberField';
 import DatePicker from '../mui/DatePicker';
 import Downshift from '../mui/Downshift';
 import CompaniesActionDispatcher from '../redux/dispatchers/CompaniesActionDispatcher';
@@ -19,6 +20,7 @@ export interface FormValues {
   companyId: number | null;
   beginDate: Date | null;
   selectValue: number | null;
+  numberInput: number | null;
 }
 
 /**
@@ -105,6 +107,8 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
         component={DatePicker}
         required
       />
+      {/* NumberInput */}
+      <Field name="numberInput" label="numerInput" component={NumberField} />
       <div>{JSON.stringify(values)}</div>
       <div>{JSON.stringify(touched)}</div>
       <div>{JSON.stringify(errors)}</div>
@@ -126,7 +130,8 @@ const TestForm = withFormik<MyFormProps, FormValues>({
   mapPropsToValues: ({ initialCompanyId, initialBeginDate }) => ({
     companyId: initialCompanyId,
     beginDate: initialBeginDate,
-    selectValue: initialCompanyId
+    selectValue: initialCompanyId,
+    numberInput: null
   }),
   validationSchema: Yup.object().shape({
     companyId: Yup.number()
