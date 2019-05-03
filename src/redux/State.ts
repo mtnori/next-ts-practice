@@ -25,15 +25,24 @@ interface Role {
 
 type RoleMap = ImmutableMap<Role>;
 
+interface Company {
+  id: number;
+  name: string;
+}
+
+type CompanyMap = ImmutableMap<Company>;
+
 interface Entities {
   users: UserMap;
   roles: RoleMap;
+  companies: CompanyMap;
 }
 
 type EntitiesMap = ImmutableMap<Entities>;
 
 export interface State {
   users: OrderedSet<string>;
+  companies: OrderedSet<string>;
   entities: EntitiesMap;
 }
 

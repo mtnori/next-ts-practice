@@ -4,12 +4,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { List } from 'immutable';
-import { UserRecord } from '../src/redux/models/User';
 
+import { Dispatch } from 'redux';
+import { CompanyRecord } from '../src/redux/models/Company';
 import withRoot from '../src/hoc/withRoot';
 import TestForm from '../src/components/TestForm';
-import UsersActionDispatcher from '../src/redux/dispatchers/UsersActionDispatcher';
-import usersSelector from '../src/redux/selectors/users';
+import CompaniesActionDispatcher from '../src/redux/dispatchers/CompaniesActionDispatcher';
+import companiesSelector from '../src/redux/selectors/companies';
 
 import { InjectedProps as AuthInjectedProps } from '../src/hoc/withAuth';
 import { InjectedProps as PermissionInjectedProps } from '../src/hoc/withPermission';
@@ -17,36 +18,34 @@ import { StateMap } from '../src/redux/State';
 
 // Props
 interface Props extends AuthInjectedProps, PermissionInjectedProps {
-  users: List<UserRecord>;
+  companies: List<CompanyRecord>;
+  companiesActions: CompaniesActionDispatcher;
 }
 
-class Page extends React.Component<Props> {
-  static async getInitialProps({ store }: any) {
-    const usersActions = new UsersActionDispatcher(store.dispatch);
-    await usersActions.getUsers();
-  }
-
-  render() {
-    const { users } = this.props;
-    console.log(users);
-    return (
-      <>
-        <TestForm
-          initialCompanyId={1}
-          initialBeginDate={new Date()}
-          submit={value => {
-            console.log(JSON.stringify(value));
-          }}
-        />
-      </>
-    );
-  }
-}
+const Page: React.FC<Props> = (props: Props) => {
+  const { companies, companiesActions } = props;
+  console.log(companies);
+  return (
+    <TestForm
+      initialCompanyId={1}
+      initialBeginDate={new Date()}
+      submit={value => {
+        console.log(JSON.stringify(value));
+      }}
+      companiesActions={companiesActions}
+    />
+  );
+};
 
 const mapStateToProps = (state: StateMap) => ({
-  users: usersSelector.getUsersResult(state)
+  companies: companiesSelector.getCompaniesResult(state)
 });
 
-export default connect(mapStateToProps)(
-  withRoot({ permissions: ['VIEW'] })(Page)
-);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  companiesActions: new CompaniesActionDispatcher(dispatch)
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRoot({ permissions: ['VIEW'] })(Page));

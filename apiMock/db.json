@@ -23,5 +23,12 @@
         "name": "manager"
       }
     ]
+  }],
+  "companies": [{
+    "id":99,
+    "name": "company1"
+  },{
+    "id": 98,
+    "name": "company2"
   }]
 }
