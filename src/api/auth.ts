@@ -2,6 +2,7 @@
  * @fileoverview Auth API
  */
 import fetch from 'isomorphic-unfetch';
+import dateParser from '../utils/dateParser';
 
 /**
  * ログイン処理
@@ -21,7 +22,8 @@ async function login(
     body: JSON.stringify({ loginId, password })
   });
   if (response.ok) {
-    const data = await response.json();
+    const text = await response.text();
+    const data = await JSON.parse(text, dateParser);
     return data;
   }
   const error = new Error(response.statusText);
@@ -47,7 +49,8 @@ async function load(
     }
   });
   if (response.ok) {
-    const data = await response.json();
+    const text = await response.text();
+    const data = await JSON.parse(text, dateParser);
     return data;
   }
   const error = new Error(response.statusText);

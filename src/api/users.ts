@@ -1,23 +1,16 @@
 import fetch from 'isomorphic-unfetch';
+import getPayloadOrError from './getPayloadOrError';
 
 async function getUsers() {
   const response = await fetch(`http://localhost:3030/users`);
-  if (response.ok) {
-    const payload = await response.json();
-    return { payload };
-  }
-  const error = new Error(response.statusText);
-  return { error };
+  const result = await getPayloadOrError(response);
+  return result;
 }
 
 async function getUserById(id: number) {
   const response = await fetch(`http://localhost:3030/users/${id}`);
-  if (response.ok) {
-    const payload = await response.json();
-    return { payload };
-  }
-  const error = new Error(response.statusText);
-  return { error };
+  const result = await getPayloadOrError(response);
+  return result;
 }
 
 export default {
