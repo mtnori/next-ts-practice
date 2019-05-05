@@ -2,6 +2,7 @@
  * @fileoverview Auth API
  */
 import fetch from 'isomorphic-unfetch';
+import ApiUtils from './apiUtils';
 import dateParser from '../utils/dateParser';
 
 /**
@@ -14,7 +15,7 @@ async function login(
   loginId: string,
   password: string
 ): Promise<{ token: string }> {
-  const response = await fetch('http://localhost:3030/login', {
+  const response = await fetch(ApiUtils.formatUrl('/login'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -41,7 +42,7 @@ async function load(
   name: string;
   permissions: string[];
 }> {
-  const response = await fetch('http://localhost:3030/loadAuth', {
+  const response = await fetch(ApiUtils.formatUrl('/loadAuth'), {
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
