@@ -2,10 +2,14 @@
  * @fileoverview ログインページ
  */
 import React from 'react';
+import getConfig from 'next/config';
 
 import withAppBar from '../src/hoc/withAppBar';
 import { login } from '../src/hoc/withAuth';
 import authAPI from '../src/api/auth';
+
+const { publicRuntimeConfig } = getConfig();
+const { API_URL } = publicRuntimeConfig;
 
 class Login extends React.Component<{}> {
   handleSubmit = async (event: any) => {
@@ -17,6 +21,7 @@ class Login extends React.Component<{}> {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
+        <div>{`The API_URL is ${API_URL}`}</div>
         <button type="submit">Login</button>
       </form>
     );
