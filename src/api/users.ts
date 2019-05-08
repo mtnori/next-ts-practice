@@ -1,19 +1,35 @@
-import fetch from 'isomorphic-unfetch';
-import ApiUtils from './apiUtils';
+import fetcher from './fetcher';
+import { formatUrl } from './apiUtils';
+
+interface Role {
+  id: number;
+  name: string;
+}
+
+interface User {
+  id: number;
+  name: string;
+  roles: Role[];
+}
+
+type Users = User[];
 
 async function getUsers() {
-  const response = await fetch(ApiUtils.formatUrl('/users'));
-  const result = await ApiUtils.getPayloadOrError(response);
-  return result;
+  try {
+    const payload = await fetcher<Users>(formatUrl('/users'));
+    return { payload };
+  } catch (error) {
+    return { error };
+  }
 }
 
 async function getUserById(id: number) {
-  const response = await fetch(ApiUtils.formatUrl(`/users/${id}`));
-  const result = await ApiUtils.getPayloadOrError(response);
-  return result;
+  try {
+    const payload = await fetcher<User>(formatUrl(`/users/${id}`));
+    return { payload };
+  } catch (error) {
+    return { error };
+  }
 }
 
-export default {
-  getUsers,
-  getUserById
-};
+export { getUsers, getUserById };

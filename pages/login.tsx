@@ -6,7 +6,7 @@ import getConfig from 'next/config';
 
 import withAppBar from '../src/hoc/withAppBar';
 import { login } from '../src/hoc/withAuth';
-import authAPI from '../src/api/auth';
+import * as authAPI from '../src/api/auth';
 
 const { publicRuntimeConfig } = getConfig();
 const { API_URL } = publicRuntimeConfig;

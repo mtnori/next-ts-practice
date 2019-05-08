@@ -4,7 +4,7 @@
 import { normalize } from 'normalizr';
 import schemas from '../schemas';
 import { fetch, fetchSuccess, fetchFailure } from '../actions/users';
-import userApi from '../../api/users';
+import * as API from '../../api/users';
 
 export default class UsersActionDispatcher {
   dispatch: any;
@@ -16,7 +16,7 @@ export default class UsersActionDispatcher {
   async getUsers(): Promise<void> {
     this.dispatch(fetch()); // Fetch start
 
-    const response = await userApi.getUsers(); // Call api
+    const response = await API.getUsers(); // Call api
     const { payload, error } = response;
 
     if (payload && !error) {

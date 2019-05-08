@@ -4,7 +4,7 @@
 import { normalize } from 'normalizr';
 import schemas from '../schemas';
 import { fetch, fetchSuccess, fetchFailure } from '../actions/companies';
-import companyApi from '../../api/companies';
+import * as API from '../../api/companies';
 
 export default class CompaniesActionDispatcher {
   dispatch: any;
@@ -16,7 +16,7 @@ export default class CompaniesActionDispatcher {
   async getCompanies(): Promise<void> {
     this.dispatch(fetch()); // Fetch start
 
-    const response = await companyApi.getCompanies(); // Call api
+    const response = await API.getCompanies(); // Call api
     const { payload, error } = response;
 
     if (payload && !error) {

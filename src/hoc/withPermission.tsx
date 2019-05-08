@@ -7,7 +7,7 @@ import nextCookie from 'next-cookies';
 import { NextComponentType } from 'next';
 import { Subtract } from 'utility-types';
 
-import authAPI from '../api/auth';
+import * as authAPI from '../api/auth';
 
 export interface Options {
   permissions?: string[];
