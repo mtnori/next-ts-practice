@@ -1,26 +1,27 @@
-import * as companies from '../constants/companies';
+import {
+  FETCH,
+  FETCH_SUCCESS,
+  FETCH_FAILURE,
+  Payload,
+  CompaniesActionTypes
+} from '../constants/companies';
 
-interface Payload {
-  result: string[];
-  entities: Object;
-}
-
-export function fetch() {
+export function fetch(): CompaniesActionTypes {
   return {
-    type: companies.FETCH
+    type: FETCH
   };
 }
 
-export function fetchSuccess(payload: Payload) {
+export function fetchSuccess(payload: Payload): CompaniesActionTypes {
   return {
-    type: companies.FETCH_SUCCESS,
+    type: FETCH_SUCCESS,
     payload
   };
 }
 
-export function fetchFailure(error: Error) {
+export function fetchFailure(error: Error): CompaniesActionTypes {
   return {
-    type: companies.FETCH_FAILURE,
+    type: FETCH_FAILURE,
     error
   };
 }
