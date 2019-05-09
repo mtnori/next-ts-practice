@@ -12,7 +12,9 @@ const merge = (
 ): CompanyEntities => {
   if ((<CompaniesPayloadActionTypes>action).payload) {
     const { payload } = <CompaniesPayloadActionTypes>action;
-    return payload.entities.companies;
+    if (payload && payload.entities && payload.entities.companies) {
+      return payload.entities.companies;
+    }
   }
   return state;
 };
