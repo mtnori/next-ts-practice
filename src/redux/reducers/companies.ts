@@ -1,9 +1,14 @@
-import produce from 'immer';
-import * as companies from '../constants/companies';
+import {
+  FETCH_SUCCESS,
+  CompaniesActionTypes,
+  CompaniesPayloadActionTypes
+} from '../constants/companies';
 
-const merge = (state: string[], action: any) => {
-  const { result } = action.payload;
-  if (result) {
+const merge = (state: string[], action: CompaniesActionTypes): string[] => {
+  if ((<CompaniesPayloadActionTypes>action).payload) {
+    const {
+      payload: { result }
+    } = <CompaniesPayloadActionTypes>action;
     // 配列ならば新しいものを返す
     if (Array.isArray(result)) {
       return result;
@@ -13,22 +18,15 @@ const merge = (state: string[], action: any) => {
     addArray = addArray.filter((x, i, self) => self.indexOf(x) === i);
     return addArray;
   }
-  // 変化がなければnullを返す
-  return null;
+  return state;
 };
 
-const reducer = (state: string[] = [], action: any) =>
-  // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
-  produce(state, draft => {
-    switch (action.type) {
-      case companies.FETCH_SUCCESS: {
-        const newState = merge(draft, action);
-        if (newState) {
-          draft = newState; // eslint-disable-line no-param-reassign
-        }
-        break;
-      }
-      default:
-    }
-  });
+const reducer = (state: string[] = [], action: CompaniesActionTypes) => {
+  switch (action.type) {
+    case FETCH_SUCCESS:
+      return merge(state, action);
+    default:
+      return state;
+  }
+};
 export default reducer;

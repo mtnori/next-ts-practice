@@ -1,4 +1,7 @@
-import { CompaniesActionTypes } from '../../constants/companies';
+import {
+  CompaniesActionTypes,
+  CompaniesPayloadActionTypes
+} from '../../constants/companies';
 import { CompanyEntities } from '../../types/entities/companies';
 
 const initialState = {};
@@ -7,8 +10,8 @@ const merge = (
   state: CompanyEntities,
   action: CompaniesActionTypes
 ): CompanyEntities => {
-  const { payload } = action;
-  if (payload && payload.entities && payload.entities.companies) {
+  if ((<CompaniesPayloadActionTypes>action).payload) {
+    const { payload } = <CompaniesPayloadActionTypes>action;
     return payload.entities.companies;
   }
   return state;

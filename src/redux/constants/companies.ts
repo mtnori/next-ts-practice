@@ -11,7 +11,6 @@ export interface Payload {
 
 interface FetchAction {
   type: typeof FETCH;
-  payload?: undefined;
 }
 
 interface FetchSuccessAction {
@@ -21,11 +20,14 @@ interface FetchSuccessAction {
 
 interface FetchFailuerAction {
   type: typeof FETCH_FAILURE;
-  payload?: undefined;
   error: Error;
 }
 
+// すべてのActionType
 export type CompaniesActionTypes =
   | FetchAction
   | FetchSuccessAction
   | FetchFailuerAction;
+
+// payloadを持っているActionType
+export type CompaniesPayloadActionTypes = FetchSuccessAction;
