@@ -1,4 +1,4 @@
-import { Company } from '../../models/Company';
+import { Company } from '../../../models/Company';
 
 export interface CompanyEntity extends Company {}
 

@@ -1,4 +1,4 @@
-import { User } from '../../models/User';
+import { User } from '../../../models/User';
 import { Omit } from '../../../types';
 
 export interface UserEntity extends Omit<User, 'roles'> {

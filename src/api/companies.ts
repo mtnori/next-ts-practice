@@ -1,10 +1,6 @@
 import fetcher from './fetcher';
 import { formatUrl } from './apiUtils';
-
-interface Company {
-  id: number;
-  name: string;
-}
+import { Company } from '../models/Company';
 
 type Companies = Company[];
 

@@ -1,10 +1,6 @@
 import fetcher from './fetcher';
 import { formatUrl } from './apiUtils';
-
-interface Role {
-  id: number;
-  name: string;
-}
+import { Role } from '../models/Role';
 
 interface User {
   id: number;
