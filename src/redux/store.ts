@@ -1,8 +1,18 @@
 import { createStore, applyMiddleware } from 'redux';
+import { RootState } from 'typesafe-actions';
 import createSagaMiddleware from 'redux-saga';
-import Immutable from 'immutable';
 import rootReducer from './reducers';
 import rootSaga from './sagas';
+
+const initialData = {
+  companies: [],
+  users: [],
+  entities: {
+    companies: {},
+    users: {},
+    roles: {}
+  }
+};
 
 /**
  * @param {object} initialState
@@ -11,7 +21,7 @@ import rootSaga from './sagas';
  * @param {boolean} options.debug User-defined debug mode param
  * @param {string} options.storeKey This key will be used to preserve store in global namespace for safe HMR
  */
-const configureStore = (initialState: any = Immutable.Map()) => {
+const configureStore = (initialState: RootState = initialData) => {
   const sagaMiddleware = createSagaMiddleware();
 
   const store = createStore(

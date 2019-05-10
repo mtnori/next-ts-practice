@@ -1,27 +1,25 @@
-import { OrderedSet } from 'immutable';
-import * as users from '../constants/users';
+import { createReducer, RootAction } from 'typesafe-actions';
+import { FETCH_SUCCESS } from '../constants/users';
 
-const initialState = OrderedSet([]);
-
-const merge = (state: OrderedSet<string>, action: any) => {
-  const { result } = action.payload;
-  if (result) {
-    // 配列ならばマージ
+const merge = (state: string[], action: RootAction): string[] => {
+  const { payload } = action;
+  if (payload && payload.result) {
+    const { result } = payload;
+    // 配列ならば新しいものを返す
     if (Array.isArray(result)) {
-      return state.merge(result);
+      return result;
     }
-    // 単一の要素なら追加
-    return state.merge([result]);
+    // 単一の要素なら追加して重複削除する
+    let addArray = state.concat([result]);
+    addArray = addArray.filter((x, i, self) => self.indexOf(x) === i);
+    return addArray;
   }
   return state;
 };
 
-const reducer = (state: OrderedSet<string> = initialState, action: any) => {
-  switch (action.type) {
-    case users.FETCH_SUCCESS:
-      return merge(state, action);
-    default:
-      return state;
-  }
-};
+const reducer = createReducer([] as string[]).handleAction(
+  FETCH_SUCCESS,
+  (state, action) => merge(state, action)
+);
+
 export default reducer;

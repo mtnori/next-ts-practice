@@ -1,27 +1,9 @@
-import {
+import { createAsyncAction } from 'typesafe-actions';
+import { FETCH, FETCH_SUCCESS, FETCH_FAILURE } from '../constants/companies';
+import { Company } from '../models/Company';
+
+export const fetchCompaniesAsync = createAsyncAction(
   FETCH,
   FETCH_SUCCESS,
-  FETCH_FAILURE,
-  Payload,
-  CompaniesActionTypes
-} from '../constants/companies';
-
-export function fetch(): CompaniesActionTypes {
-  return {
-    type: FETCH
-  };
-}
-
-export function fetchSuccess(payload: Payload): CompaniesActionTypes {
-  return {
-    type: FETCH_SUCCESS,
-    payload
-  };
-}
-
-export function fetchFailure(error: Error): CompaniesActionTypes {
-  return {
-    type: FETCH_FAILURE,
-    error
-  };
-}
+  FETCH_FAILURE
+)<undefined, Company[], Error>();

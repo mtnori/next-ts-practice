@@ -1,24 +1,11 @@
 /**
  * @fileoverview User Model
  */
-import { Record, RecordOf, List } from 'immutable';
-import { RoleRecord } from './Role';
+import { Role } from './Role';
 
-interface UserProps {
-  id: number | null;
+export interface User {
+  id: number;
   name: string;
-  roles: List<RoleRecord>;
+  roles: Role[];
 }
 
-const defaultValues = {
-  id: null,
-  name: '',
-  roles: List([])
-};
-
-export type UserRecord = RecordOf<UserProps>;
-
-const makeUser = Record(defaultValues);
-export default {
-  makeUser
-};

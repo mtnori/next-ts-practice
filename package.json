@@ -43,6 +43,7 @@
     "redux-saga": "^1.0.2",
     "reselect": "^4.0.0",
     "styled-jsx": "^3.2.1",
+    "typesafe-actions": "^4.2.1",
     "utility-types": "^3.5.0",
     "yup": "^0.27.0"
   },

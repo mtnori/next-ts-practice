@@ -1,21 +1,8 @@
 /**
  * @fileoverview Role Model
  */
-import { Record, RecordOf } from 'immutable';
-
-interface RoleProps {
-  id: number | null;
+export interface Role {
+  id: number;
   name: string;
 }
 
-const defaultValues = {
-  id: null,
-  name: ''
-};
-
-export type RoleRecord = RecordOf<RoleProps>;
-
-const makeRole = Record(defaultValues);
-export default {
-  makeRole
-};

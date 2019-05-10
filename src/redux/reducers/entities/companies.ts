@@ -1,27 +1,24 @@
-import {
-  CompaniesActionTypes,
-  CompaniesPayloadActionTypes
-} from '../../constants/companies';
-import { CompanyEntities } from '../../types/entities/companies';
+import { Company } from '../../models/Company';
+
+export interface CompanyEntity extends Company {}
+
+export interface CompanyEntities {
+  [key: string]: CompanyEntity;
+}
 
 const initialState = {};
 
-const merge = (
-  state: CompanyEntities,
-  action: CompaniesActionTypes
-): CompanyEntities => {
-  if ((<CompaniesPayloadActionTypes>action).payload) {
-    const { payload } = <CompaniesPayloadActionTypes>action;
-    if (payload && payload.entities && payload.entities.companies) {
-      return payload.entities.companies;
-    }
+const merge = (state: CompanyEntities, action: any): CompanyEntities => {
+  const { payload } = action;
+  if (payload && payload.entities && payload.entities.companies) {
+    return payload.entities.companies;
   }
   return state;
 };
 
 const reducer = (
   state: CompanyEntities = initialState,
-  action: CompaniesActionTypes
+  action: any
 ): CompanyEntities => {
   return merge(state, action);
 };

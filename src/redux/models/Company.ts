@@ -1,21 +1,8 @@
 /**
  * @fileoverview Company Model
  */
-import { Record, RecordOf } from 'immutable';
-
-interface CompanyProps {
-  id: number | null;
+export interface Company {
+  id: number;
   name: string;
 }
 
-const defaultValues = {
-  id: null,
-  name: ''
-};
-
-export type CompanyRecord = RecordOf<CompanyProps>;
-
-const makeCompany = Record(defaultValues);
-export default {
-  makeCompany
-};
