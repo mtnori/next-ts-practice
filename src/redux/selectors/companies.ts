@@ -1,21 +1,16 @@
+import { RootState } from 'typesafe-actions';
 import { createSelector } from 'reselect';
+import { denormalize } from 'normalizr';
+import schemas from '../schemas';
 
-import { StateMap } from '../State';
-import companiesEntities from './entities/companies';
+const getResult = (state: RootState) => state.companies;
 
-import Company from '../models/Company';
-
-const getResult = (state: StateMap) => state.get('companies').toList();
+const getEntities = (state: RootState) => state.entities;
 
 const getCompaniesResult = createSelector(
   getResult,
-  companiesEntities.getCompanies,
-  (result, companies) => {
-    return result.map(entityId => {
-      const company = companies[entityId];
-      return Company.makeCompany(company);
-    });
-  }
+  getEntities,
+  (result, entities) => denormalize(result, [schemas.company], entities)
 );
 
 export default {
