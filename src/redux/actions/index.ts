@@ -1,7 +1,4 @@
-import * as companies from './companies';
-import * as users from './users';
+import { UsersActions } from './users';
 
-export default {
-  companies,
-  users
-};
+export type RootAction = UsersActions;
+

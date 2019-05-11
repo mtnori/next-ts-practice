@@ -3,27 +3,23 @@
  */
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { List } from 'immutable';
+import { RootState } from 'typesafe-actions';
 
-import { Dispatch } from 'redux';
-import { CompanyRecord } from '../src/redux/models/Company';
+import { Company } from '../src/models/Company';
 import withRoot from '../src/hoc/withRoot';
 import TestForm from '../src/components/TestForm';
-import CompaniesActionDispatcher from '../src/redux/dispatchers/CompaniesActionDispatcher';
 import companiesSelector from '../src/redux/selectors/companies';
 
 import { InjectedProps as AuthInjectedProps } from '../src/hoc/withAuth';
 import { InjectedProps as PermissionInjectedProps } from '../src/hoc/withPermission';
-import { StateMap } from '../src/redux/State';
 
 // Props
 interface Props extends AuthInjectedProps, PermissionInjectedProps {
-  companies: List<CompanyRecord>;
-  companiesActions: CompaniesActionDispatcher;
+  companies: Company[];
 }
 
 const Page: React.FC<Props> = (props: Props) => {
-  const { companies, companiesActions } = props;
+  const { companies } = props;
   console.log(companies);
   return (
     <TestForm
@@ -32,20 +28,14 @@ const Page: React.FC<Props> = (props: Props) => {
       submit={value => {
         console.log(JSON.stringify(value));
       }}
-      companiesActions={companiesActions}
     />
   );
 };
 
-const mapStateToProps = (state: StateMap) => ({
+const mapStateToProps = (state: RootState) => ({
   companies: companiesSelector.getCompaniesResult(state)
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  companiesActions: new CompaniesActionDispatcher(dispatch)
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRoot({ permissions: ['VIEW'] })(Page));
+export default connect(mapStateToProps)(
+  withRoot({ permissions: ['VIEW'] })(Page)
+);

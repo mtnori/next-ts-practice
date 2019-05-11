@@ -1,13 +1,11 @@
-import { combineReducers } from 'redux-immutable';
+import { combineReducers } from 'redux';
 
-import companies from './companies';
 import users from './users';
-import roles from './roles';
 
-const entities = combineReducers({
-  companies,
-  users,
-  roles
+const entitiesReducer = combineReducers({
+  users
 });
 
-export default entities;
+export default entitiesReducer;
+
+export type EntitiesState = ReturnType<typeof entitiesReducer>;

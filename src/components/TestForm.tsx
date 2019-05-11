@@ -11,7 +11,7 @@ import TextField from '../mui/TextField';
 import NumberField from '../mui/NumberField';
 import DatePicker from '../mui/DatePicker';
 import Downshift from '../mui/Downshift';
-import CompaniesActionDispatcher from '../redux/dispatchers/CompaniesActionDispatcher';
+import * as actions from '../redux/actions/companies';
 
 /**
  * Formikのvalues
@@ -28,7 +28,6 @@ export interface FormValues {
  */
 export interface OtherProps {
   submit: (values: FormValues) => void;
-  companiesActions: CompaniesActionDispatcher;
 }
 
 const companies = [
@@ -50,18 +49,18 @@ const itemsToMenuItems = (items: { label: string; value: any }[]) =>
   ));
 
 const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
-  const { handleSubmit, values, touched, errors, companiesActions } = props;
+  const { handleSubmit, values, touched, errors } = props;
 
   const numberParser = (value: any) => value || null;
 
   // Effect Hooks
   React.useEffect(() => {
     async function fetchData() {
-      await companiesActions.getCompanies();
+      await actions.fetchCompaniesAsync.request();
     }
     fetchData();
     console.log('hooks');
-  }, [companiesActions, values.companyId]);
+  }, [values.companyId]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -122,7 +121,6 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
 interface MyFormProps {
   initialCompanyId: number | null;
   initialBeginDate: Date | null;
-  companiesActions: CompaniesActionDispatcher;
   submit: (values: FormValues) => void;
 }
 

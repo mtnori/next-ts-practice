@@ -1,28 +1,27 @@
+import { Reducer } from 'redux';
+
+import { RootAction } from '../../actions';
+import { NormalizedData } from '../../NormalizedData';
+import mergeEntities from '../../mergeEntities';
 import { User } from '../../../models/User';
-import { Omit } from '../../../types';
 
-export interface UserEntity extends Omit<User, 'roles'> {
-  roles: string[];
-}
-
-export interface UserEntities {
+interface UserEntity extends User {}
+interface UserEntities {
   [key: string]: UserEntity;
 }
 
+type State = UserEntities;
+
 const initialState = {};
 
-const merge = (state: UserEntities, action: any): UserEntities => {
-  const { payload } = action;
-  if (payload && payload.entities && payload.entities.users) {
-    return payload.entities.users;
+const reducer: Reducer<State, RootAction> = (state = initialState, action) => {
+  if ((<{ payload: NormalizedData }>action).payload) {
+    return mergeEntities<State>(
+      state,
+      (<{ payload: NormalizedData }>action).payload.entities.users
+    );
   }
   return state;
 };
 
-const reducer = (
-  state: UserEntities = initialState,
-  action: any
-): UserEntities => {
-  return merge(state, action);
-};
 export default reducer;

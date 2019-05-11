@@ -1,22 +1,20 @@
-import { createReducer } from 'typesafe-actions';
-import { FETCH_SUCCESS } from '../constants/users';
+import { Reducer } from 'redux';
 
-const reducer = createReducer([] as string[]).handleAction(
-  FETCH_SUCCESS,
-  (state, action) => {
-    const { result } = action.payload;
-    if (result) {
-      // 配列ならば新しいものを返す
-      if (Array.isArray(result)) {
-        return result;
-      }
-      // 単一の要素なら追加して重複削除する
-      let addArray = state.concat([result]);
-      addArray = addArray.filter((x, i, self) => self.indexOf(x) === i);
-      return addArray;
+import { FETCH_SUCCESS } from '../constants/users';
+import mergeResult from '../mergeResult';
+import { RootAction } from '../actions';
+
+type State = string[];
+const initialState = [] as string[];
+
+const reducer: Reducer<State, RootAction> = (state = initialState, action) => {
+  switch (action.type) {
+    case FETCH_SUCCESS:
+      return mergeResult(state, action.payload.result);
+    default: {
+      return state;
     }
-    return state;
   }
-);
+};
 
 export default reducer;
