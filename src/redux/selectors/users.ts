@@ -1,34 +1,24 @@
+/**
+ * @fileoverview Users selector
+ */
 import { createSelector } from 'reselect';
-import { List } from 'immutable';
+import { denormalize } from 'normalizr';
+import { RootState } from '../reducers';
+import { EntitiesState } from '../reducers/entities';
+import { IUser } from '../../models/User';
+import schemas from '../schemas';
 
-import { StateMap } from '../State';
-import usersEntities from './entities/users';
-import rolesEntities from './entities/roles';
+const getResult = (state: RootState) => state.users;
 
-import User from '../models/User';
-import Role from '../models/Role';
+const getEntities = (state: RootState) => state.entities;
 
-const getResult = (state: StateMap) => state.get('users').toList();
-
-const getUsersResult = createSelector(
+export const getUsers = createSelector<
+  RootState,
+  string[],
+  EntitiesState,
+  IUser[]
+>(
   getResult,
-  usersEntities.getUsers,
-  rolesEntities.getRoles,
-  (result, users, roles) => {
-    return result.map(entityId => {
-      const user = users[entityId];
-      const roleList = (user.roles || []).map((roleId: string) => {
-        const role = roles[roleId];
-        return Role.makeRole(role);
-      });
-      return User.makeUser({
-        ...user,
-        roles: List(roleList)
-      });
-    });
-  }
+  getEntities,
+  (result, entities) => denormalize(result, [schemas.user], entities)
 );
-
-export default {
-  getUsersResult
-};

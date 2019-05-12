@@ -5,7 +5,7 @@ import Head from 'next/head';
 // Redux
 import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
-import { serialize, deserialize } from 'json-immutable';
+import withReduxSaga from 'next-redux-saga';
 
 // Material UI
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -86,7 +86,4 @@ class MyApp extends App<any> {
   }
 }
 
-export default withRedux(makeStore, {
-  serializeState: (state: any) => serialize(state),
-  deserializeState: (state: any) => (state ? deserialize(state) : state)
-})(MyApp);
+export default withRedux(makeStore)(withReduxSaga(MyApp));

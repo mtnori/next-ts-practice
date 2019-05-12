@@ -1,19 +1,25 @@
-import fetch from 'isomorphic-unfetch';
-import ApiUtils from './apiUtils';
+import fetcher from './fetcher';
+import { formatUrl } from './apiUtils';
+import { ICompany } from '../models/Company';
+
+type Companies = ICompany[];
 
 async function getCompanies() {
-  const response = await fetch(ApiUtils.formatUrl('/companies'));
-  const result = await ApiUtils.getPayloadOrError(response);
-  return result;
+  try {
+    const payload = await fetcher<Companies>(formatUrl('/companies'));
+    return { payload };
+  } catch (error) {
+    return { error };
+  }
 }
 
 async function getCompanyById(id: number) {
-  const response = await fetch(ApiUtils.formatUrl(`/companies/${id}`));
-  const result = await ApiUtils.getPayloadOrError(response);
-  return result;
+  try {
+    const payload = await fetcher<ICompany>(formatUrl(`/companies/${id}`));
+    return { payload };
+  } catch (error) {
+    return { error };
+  }
 }
 
-export default {
-  getCompanies,
-  getCompanyById
-};
+export { getCompanies, getCompanyById };

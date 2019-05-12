@@ -1,27 +1,23 @@
-import { OrderedSet } from 'immutable';
-import * as users from '../constants/users';
+/**
+ * @fileoverview Users Result reducer
+ */
+import { Reducer } from 'redux';
 
-const initialState = OrderedSet([]);
+import { FETCH_SUCCESS } from '../constants/users';
+import mergeResult from '../mergeResult';
+import { RootAction } from '../actions';
 
-const merge = (state: OrderedSet<string>, action: any) => {
-  const { result } = action.payload;
-  if (result) {
-    // 配列ならばマージ
-    if (Array.isArray(result)) {
-      return state.merge(result);
-    }
-    // 単一の要素なら追加
-    return state.merge([result]);
-  }
-  return state;
-};
+type State = string[];
+const initialState = [] as string[];
 
-const reducer = (state: OrderedSet<string> = initialState, action: any) => {
+const reducer: Reducer<State, RootAction> = (state = initialState, action) => {
   switch (action.type) {
-    case users.FETCH_SUCCESS:
-      return merge(state, action);
-    default:
+    case FETCH_SUCCESS:
+      return mergeResult(state, action.payload.result);
+    default: {
       return state;
+    }
   }
 };
+
 export default reducer;

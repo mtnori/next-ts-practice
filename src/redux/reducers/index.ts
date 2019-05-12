@@ -1,13 +1,16 @@
-import { combineReducers } from 'redux-immutable';
+/**
+ * @fileoverview Root reducer
+ */
+import { combineReducers } from 'redux';
+
+import users from './users';
 import entities from './entities';
 
-import companies from './companies';
-import users from './users';
-
 const rootReducer = combineReducers({
-  companies,
   users,
   entities
 });
 
 export default rootReducer;
+
+export type RootState = ReturnType<typeof rootReducer>;
