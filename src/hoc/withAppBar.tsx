@@ -87,7 +87,7 @@ const withAppBar = <P extends {}>(
               <AuthContext.Consumer>
                 {value =>
                   value &&
-                  value.username && (
+                  value.name && (
                     <div>
                       <IconButton
                         aria-owns={open ? 'menu-appbar' : undefined}
