@@ -4,7 +4,6 @@
 import React from 'react';
 
 import { Action, Dispatch } from 'redux';
-import dynamic from 'next/dynamic';
 import { connect } from 'react-redux';
 import { RootState } from '../src/redux/reducers';
 
@@ -13,9 +12,12 @@ import withRoot from '../src/hoc/withRoot';
 import * as usersSelector from '../src/redux/selectors/users';
 import * as actions from '../src/redux/actions/users';
 
+/*
 const TestForm = dynamic(() => import('../src/components/TestForm'), {
   ssr: false
 });
+ */
+import TestForm from '../src/components/TestForm';
 
 // Props
 interface Props {
