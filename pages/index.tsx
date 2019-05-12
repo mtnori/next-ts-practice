@@ -4,7 +4,6 @@
 import React from 'react';
 
 import { Action, Dispatch } from 'redux';
-import { NextFC } from 'next';
 import dynamic from 'next/dynamic';
 import { connect } from 'react-redux';
 import { RootState } from '../src/redux/reducers';
@@ -24,7 +23,7 @@ interface Props {
   getUsers: () => Action<any>;
 }
 
-const Page: NextFC<Props> = (props: Props) => {
+const Page = (props: Props) => {
   const { users, getUsers } = props;
   console.log('index render');
   console.log(users);

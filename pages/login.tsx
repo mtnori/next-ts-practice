@@ -2,7 +2,6 @@
  * @fileoverview ログインページ
  */
 import React, { useContext } from 'react';
-import { NextFC } from 'next';
 import getConfig from 'next/config';
 
 import withAppBar from '../src/hoc/withAppBar';
@@ -38,7 +37,7 @@ class Login extends React.Component<{}> {
 }
 */
 
-const Login: NextFC<{}> = () => {
+const Login = () => {
   const { addNotification } = useContext(NotificationContext);
 
   const handleSubmit = async (event: any) => {
