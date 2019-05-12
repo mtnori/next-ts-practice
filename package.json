@@ -12,7 +12,7 @@
     "cross-env": "^5.2.0",
     "date-fns": "^2.0.0-alpha.27",
     "downshift": "^2.2.3",
-    "formik": "^1.5.3",
+    "formik": "^1.5.4",
     "formik-material-ui": "^0.0.16",
     "immer": "^3.1.1",
     "isomorphic-unfetch": "^3.0.0",
@@ -44,7 +44,7 @@
   "scripts": {
     "dev": "cross-env API_URL=\"http://localhost:3030\" next",
     "build": "next build",
-    "start": "next start"
+    "start": "cross-env API_URL=\"http://localhost:3030\" next start"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",

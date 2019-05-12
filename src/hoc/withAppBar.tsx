@@ -15,6 +15,7 @@ import Menu from '@material-ui/core/Menu';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import createStyles from '@material-ui/core/styles/createStyles';
 
+import AuthContext from '../components/AuthContext';
 import { logout } from './withAuth';
 
 const styles = createStyles({
@@ -27,19 +28,13 @@ const styles = createStyles({
   }
 });
 
-interface OriginalProps {
-  auth?: {
-    username: string;
-    permissions: string[];
-  };
-}
 export interface WrapperProps extends WithStyles<typeof styles> {}
 
 // Gets the display name of a JSX component for dev tools
 const getDisplayName = (Component: any) =>
   Component.displayName || Component.name || 'Component';
 
-const withAppBar = <P extends OriginalProps>(
+const withAppBar = <P extends {}>(
   WrappedComponent: NextComponentType<P, any, any>
 ) =>
   class WithAppBar extends React.Component<P & WrapperProps> {
@@ -89,34 +84,41 @@ const withAppBar = <P extends OriginalProps>(
               <Typography variant="h6" color="inherit" className={classes.grow}>
                 Title
               </Typography>
-              {props.auth && (
-                <div>
-                  <IconButton
-                    aria-owns={open ? 'menu-appbar' : undefined}
-                    aria-haspopup="true"
-                    onClick={this.handleMenu}
-                    color="inherit"
-                  >
-                    <AccountCircle />
-                  </IconButton>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right'
-                    }}
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right'
-                    }}
-                    open={open}
-                    onClose={this.handleClose}
-                  >
-                    <MenuItem onClick={this.handleLogout}>ログアウト</MenuItem>
-                  </Menu>
-                </div>
-              )}
+              <AuthContext.Consumer>
+                {value =>
+                  value &&
+                  value.username && (
+                    <div>
+                      <IconButton
+                        aria-owns={open ? 'menu-appbar' : undefined}
+                        aria-haspopup="true"
+                        onClick={this.handleMenu}
+                        color="inherit"
+                      >
+                        <AccountCircle />
+                      </IconButton>
+                      <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right'
+                        }}
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right'
+                        }}
+                        open={open}
+                        onClose={this.handleClose}
+                      >
+                        <MenuItem onClick={this.handleLogout}>
+                          ログアウト
+                        </MenuItem>
+                      </Menu>
+                    </div>
+                  )
+                }
+              </AuthContext.Consumer>
             </Toolbar>
           </AppBar>
           <WrappedComponent {...props as P} />

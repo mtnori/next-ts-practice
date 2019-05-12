@@ -5,12 +5,7 @@ import * as React from 'react';
 import Router from 'next/router';
 import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
-import { Subtract } from 'utility-types';
 import { NextComponentType } from 'next';
-
-export interface InjectedProps {
-  token: string;
-}
 
 export const login = async ({ token }: { token: string }) => {
   cookie.set('token', token, { expires: 1 });
@@ -41,6 +36,7 @@ export const auth = (ctx: any) => {
   // We already checked for server. This should only happen on client.
   if (!token) {
     Router.push('/login');
+    return null;
   }
 
   return token;
@@ -50,20 +46,23 @@ export const auth = (ctx: any) => {
 const getDisplayName = (Component: any) =>
   Component.displayName || Component.name || 'Component';
 
-const withAuthSync = <P extends InjectedProps>(
+const withAuthSync = <P extends {}>(
   WrappedComponent: NextComponentType<P, any, any>
 ) =>
-  class extends React.Component<Subtract<P, InjectedProps>> {
+  class extends React.Component<P> {
     static displayName = `withAuthSync(${getDisplayName(WrappedComponent)})`;
 
     static async getInitialProps(ctx: any) {
       const token = auth(ctx);
 
-      const componentProps =
-        WrappedComponent.getInitialProps &&
-        (await WrappedComponent.getInitialProps(ctx));
+      if (token) {
+        const componentProps =
+          WrappedComponent.getInitialProps &&
+          (await WrappedComponent.getInitialProps(ctx));
 
-      return { ...componentProps, token };
+        return { ...componentProps };
+      }
+      return null;
     }
 
     componentDidMount() {

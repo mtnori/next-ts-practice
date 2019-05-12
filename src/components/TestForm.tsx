@@ -2,8 +2,7 @@
  * @fileoverview Form component for mui formik wrapper
  */
 import React, { useContext, useEffect, useRef } from 'react';
-import { connect } from 'react-redux';
-import { Action, Dispatch } from 'redux';
+import { Action } from 'redux';
 
 import { Field, withFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
@@ -15,7 +14,6 @@ import TextField from '../mui/TextField';
 import NumberField from '../mui/NumberField';
 import DatePicker from '../mui/DatePicker';
 import Downshift from '../mui/Downshift';
-import * as actions from '../redux/actions/users';
 
 /**
  * Formikのvalues
@@ -32,12 +30,6 @@ export interface FormValues {
  */
 export interface OtherProps {
   submit: (values: FormValues) => void;
-}
-
-/**
- * react-redux connectからinjectされるDispatch
- */
-export interface DispatchProps {
   getUsers: () => Action<any>;
 }
 
@@ -59,9 +51,7 @@ const itemsToMenuItems = (items: { label: string; value: any }[]) =>
     </MenuItem>
   ));
 
-const InnerForm = (
-  props: OtherProps & DispatchProps & FormikProps<FormValues>
-) => {
+const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
   const { handleSubmit, values, touched, errors, getUsers } = props;
 
   // Contextから取得する
@@ -147,11 +137,8 @@ interface MyFormProps {
   initialUserId: number | null;
   initialBeginDate: Date | null;
   submit: (values: FormValues) => void;
+  getUsers: () => Action<any>;
 }
-
-const mapDispatchToProps = (dispatch: Dispatch<Action<any>>) => ({
-  getUsers: () => dispatch(actions.fetch())
-});
 
 const TestForm = withFormik<MyFormProps, FormValues>({
   mapPropsToValues: ({ initialUserId, initialBeginDate }) => ({
@@ -174,12 +161,6 @@ const TestForm = withFormik<MyFormProps, FormValues>({
       setSubmitting(false);
     }, 1000);
   }
-})(
-  // withFormikの前にconnectする
-  connect(
-    undefined,
-    mapDispatchToProps
-  )(InnerForm)
-);
+})(InnerForm);
 
 export default TestForm;

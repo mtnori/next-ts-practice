@@ -5,35 +5,30 @@ import * as React from 'react';
 import Router from 'next/router';
 import nextCookie from 'next-cookies';
 import { NextComponentType } from 'next';
-import { Subtract } from 'utility-types';
 
+import AuthContext, { Auth } from '../components/AuthContext';
 import * as authAPI from '../api/auth';
 
 export interface Options {
   permissions?: string[];
 }
 
-export interface InjectedProps {
-  auth: {
-    username: string;
-    permissions: string[];
-  };
-}
-
 interface State {
   isAuthorized: boolean;
+}
+
+interface WithAuthProps {
+  auth: Auth;
 }
 
 // Gets the display name of a JSX component for dev tools
 const getDisplayName = (Component: any) =>
   Component.displayName || Component.name || 'Component';
 
-const withPermission = ({ permissions = [] }: Options) => <
-  P extends InjectedProps
->(
+const withPermission = ({ permissions = [] }: Options) => <P extends {}>(
   WrappedComponent: NextComponentType<P, any, any>
 ) =>
-  class extends React.Component<Subtract<P, InjectedProps>, State> {
+  class extends React.Component<P & WithAuthProps, State> {
     static displayName = `withPermission(${getDisplayName(WrappedComponent)})`;
 
     static async getInitialProps(ctx: any) {
@@ -74,6 +69,7 @@ const withPermission = ({ permissions = [] }: Options) => <
         // クライアントサイドで権限不足ならば、/noAuthへ遷移させる
         if (!isAuthorized) {
           Router.push('/noAuth');
+          return null;
         }
       }
 
@@ -86,7 +82,12 @@ const withPermission = ({ permissions = [] }: Options) => <
     }
 
     render() {
-      return <WrappedComponent {...this.props as P} />;
+      const { auth, ...props } = this.props;
+      return (
+        <AuthContext.Provider value={{ ...auth }}>
+          <WrappedComponent {...props as P} />
+        </AuthContext.Provider>
+      );
     }
   };
 

@@ -3,19 +3,15 @@
  */
 import { NextComponentType } from 'next';
 
-import withPermission, {
-  Options,
-  InjectedProps as PermissionInjectedProps
-} from './withPermission';
-import withAuthSync, { InjectedProps as AuthInjectedProps } from './withAuth';
+import withPermission, { Options } from './withPermission';
+import withAuthSync from './withAuth';
 import withAppBar from './withAppBar';
 
-// 各HOCのInjectedPropsをまとめる
-interface InjectedProps extends AuthInjectedProps, PermissionInjectedProps {}
-
-const withRoot = ({ permissions = [] }: Options) => <P extends InjectedProps>(
+const withRoot = ({ permissions = [] }: Options) => <P extends {}>(
   WrappedComponent: NextComponentType<P, any, any>
 ) =>
-  withAppBar(withPermission({ permissions })(withAuthSync(WrappedComponent)));
+  withAuthSync(withPermission({ permissions })(withAppBar(
+    WrappedComponent
+  ) as any) as any);
 
 export default withRoot;
