@@ -7,11 +7,17 @@ import getConfig from 'next/config';
 import withAppBar from '../src/hoc/withAppBar';
 import { login } from '../src/hoc/withAuth';
 import * as authAPI from '../src/api/auth';
+import { fetch as fetchUsers } from '../src/redux/actions/users';
 
 const { publicRuntimeConfig } = getConfig();
 const { API_URL } = publicRuntimeConfig;
 
 class Login extends React.Component<{}> {
+  static async getInitialProps({ store }: any) {
+    // ユーザー一覧を取得するAPIを発行する
+    store.dispatch(fetchUsers());
+  }
+
   handleSubmit = async (event: any) => {
     event.preventDefault();
     const { token } = await authAPI.login('username', 'password');

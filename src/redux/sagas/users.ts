@@ -11,6 +11,8 @@ function* index() {
   // ユーザー一覧の取得
   const { payload, error } = yield call(API.getUsers);
 
+  console.log('fire!!');
+
   if (payload && !error) {
     // 成功のアクションを発行
     yield put(fetchSuccess(payload));

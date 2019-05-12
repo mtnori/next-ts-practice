@@ -25,7 +25,7 @@ const Page: React.FC<Props> = (props: Props) => {
     <TestForm
       initialUserId={1}
       initialBeginDate={new Date()}
-      submit={value => {
+      submit={(value: any) => {
         console.log(JSON.stringify(value));
       }}
     />
