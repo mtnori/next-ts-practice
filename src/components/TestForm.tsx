@@ -1,7 +1,7 @@
 /**
  * @fileoverview Form component for mui formik wrapper
  */
-import * as React from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Action, Dispatch } from 'redux';
 
@@ -9,6 +9,7 @@ import { Field, withFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
 import MenuItem from '@material-ui/core/MenuItem';
+import NotificationContext from './NotificationContext';
 
 import TextField from '../mui/TextField';
 import NumberField from '../mui/NumberField';
@@ -63,16 +64,28 @@ const InnerForm = (
 ) => {
   const { handleSubmit, values, touched, errors, getUsers } = props;
 
+  // Contextから取得する
+  const { addNotification } = useContext(NotificationContext);
+
   const numberParser = (value: any) => value || null;
+
+  const isInitialMount = useRef(true);
 
   // Effect Hooks
   // 直接store.dispatchへはアクセスできないので、connect経由でpropsへinjectする
-  React.useEffect(() => {
+  useEffect(() => {
     async function fetchData() {
       getUsers();
     }
-    fetchData();
-  }, [getUsers, values.userId]);
+    // componentDidUpdateと同じ動作にする
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      fetchData();
+      // メッセージを発火させる
+      addNotification({ message: 'Redux SagaのTaskがFire', level: 'success' });
+    }
+  }, [addNotification, getUsers, values.userId]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -162,6 +175,7 @@ const TestForm = withFormik<MyFormProps, FormValues>({
     }, 1000);
   }
 })(
+  // withFormikの前にconnectする
   connect(
     undefined,
     mapDispatchToProps

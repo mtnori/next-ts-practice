@@ -1,7 +1,8 @@
 /**
  * @fileoverview フォームテスト
  */
-import * as React from 'react';
+import React from 'react';
+import { NextFC } from 'next';
 import { connect } from 'react-redux';
 import { RootState } from '../src/redux/reducers';
 
@@ -18,7 +19,7 @@ interface Props extends AuthInjectedProps, PermissionInjectedProps {
   users: IUser[];
 }
 
-const Page: React.FC<Props> = (props: Props) => {
+const Page: NextFC<Props> = (props: Props) => {
   const { users } = props;
   console.log(users);
   return (

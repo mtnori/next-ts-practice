@@ -22,6 +22,10 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import Router from 'next/router';
 
+// React notification sysmem
+import NotificationSystem from 'react-notification-system';
+import NotificationContext from '../src/components/NotificationContext';
+
 import getPageContext from '../src/getPageContext';
 import makeStore from '../src/redux/store';
 
@@ -31,10 +35,12 @@ Router.events.on('routeChangeStart', () => {
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
+// MyApp
 class MyApp extends App<any> {
   constructor(props: any, context: any) {
     super(props, context);
     this.pageContext = getPageContext();
+    this.notificationSystem = React.createRef<NotificationSystem.System>();
   }
 
   static async getInitialProps({ Component, ctx }: any) {
@@ -52,10 +58,20 @@ class MyApp extends App<any> {
     }
   }
 
+  addNotification = (notification: NotificationSystem.Notification) => {
+    const notificationSystem = this.notificationSystem.current;
+    if (notificationSystem) {
+      notificationSystem.addNotification(notification);
+    }
+  };
+
   pageContext: any;
+
+  notificationSystem: React.RefObject<NotificationSystem.System>;
 
   render() {
     const { Component, pageProps, store } = this.props;
+
     return (
       <Container>
         <Head>
@@ -76,11 +92,16 @@ class MyApp extends App<any> {
                 <CssBaseline />
                 {/* Pass pageContext to the _document though the renderPage enhancer
                   to render collected styles on server-side. */}
-                <Component pageContext={this.pageContext} {...pageProps} />
+                <NotificationContext.Provider
+                  value={{ addNotification: this.addNotification }}
+                >
+                  <Component pageContext={this.pageContext} {...pageProps} />
+                </NotificationContext.Provider>
               </MuiThemeProvider>
             </JssProvider>
           </MuiPickersUtilsProvider>
         </Provider>
+        <NotificationSystem ref={this.notificationSystem} />
       </Container>
     );
   }

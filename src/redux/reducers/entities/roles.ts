@@ -1,19 +1,19 @@
 /**
- * @fileoverview Users Entities Reducer
+ * @fileoverview Roles Entities Reducer
  */
 import { Reducer } from 'redux';
 
 import { RootAction } from '../../actions';
 import { NormalizedData } from '../../NormalizedData';
 import mergeEntities from '../../mergeEntities';
-import { IUser } from '../../../models/User';
+import { IRole } from '../../../models/Role';
 
-interface UserEntity extends IUser {}
-interface UserEntities {
-  [key: string]: UserEntity;
+interface RoleEntity extends IRole {}
+interface RoleEntities {
+  [key: string]: RoleEntity;
 }
 
-type State = UserEntities;
+type State = RoleEntities;
 
 const initialState = {};
 
@@ -26,10 +26,10 @@ const reducer: Reducer<State, RootAction> = (state = initialState, action) => {
     (action as SuccessAction).payload &&
     (action as SuccessAction).payload.entities
   ) {
-    const { users } = (action as SuccessAction).payload.entities;
-    if (users) {
-      console.log('merge users entities');
-      return mergeEntities<State>(state, users);
+    const { roles } = (action as SuccessAction).payload.entities;
+    if (roles) {
+      console.log('merge roles entities');
+      return mergeEntities<State>(state, roles);
     }
   }
   return state;
