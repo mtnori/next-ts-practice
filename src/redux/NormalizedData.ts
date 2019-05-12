@@ -1,4 +1,4 @@
 export interface NormalizedData {
-  result: any;
-  entities: any;
+  result: string | string[];
+  entities: Partial<ReturnType<typeof import('./reducers/entities').default>>;
 }

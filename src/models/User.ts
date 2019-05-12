@@ -1,11 +1,8 @@
 /**
  * @fileoverview User Model
  */
-import { Role } from './Role';
-
-export interface User {
+export interface IUser {
   id: number;
   name: string;
-  roles: Role[];
+  roles: import('./Role').IRole;
 }
-

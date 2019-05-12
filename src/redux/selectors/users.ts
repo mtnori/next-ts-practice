@@ -1,8 +1,11 @@
+/**
+ * @fileoverview Users selector
+ */
 import { createSelector } from 'reselect';
 import { denormalize } from 'normalizr';
 import { RootState } from '../reducers';
 import { EntitiesState } from '../reducers/entities';
-import { User } from '../../models/User';
+import { IUser } from '../../models/User';
 import schemas from '../schemas';
 
 const getResult = (state: RootState) => state.users;
@@ -13,7 +16,7 @@ export const getUsers = createSelector<
   RootState,
   string[],
   EntitiesState,
-  User[]
+  IUser[]
 >(
   getResult,
   getEntities,

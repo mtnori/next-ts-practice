@@ -1,3 +1,6 @@
+/**
+ * @fileoverview Users Action creator
+ */
 import { FETCH, FETCH_SUCCESS, FETCH_FAILURE } from '../constants/users';
 import { NormalizedData } from '../NormalizedData';
 
@@ -15,6 +18,7 @@ export const fetchFailure = (error: Error) => ({
   error
 });
 
-export type UsersActions = ReturnType<
-  typeof fetch | typeof fetchSuccess | typeof fetchFailure
->;
+export type UsersActions =
+  | ReturnType<typeof fetch>
+  | ReturnType<typeof fetchSuccess>
+  | ReturnType<typeof fetchFailure>;

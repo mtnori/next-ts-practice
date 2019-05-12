@@ -1,3 +1,6 @@
+/**
+ * @fileoverview Users Result reducer
+ */
 import { Reducer } from 'redux';
 
 import { FETCH_SUCCESS } from '../constants/users';
