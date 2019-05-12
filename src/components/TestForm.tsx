@@ -11,13 +11,13 @@ import TextField from '../mui/TextField';
 import NumberField from '../mui/NumberField';
 import DatePicker from '../mui/DatePicker';
 import Downshift from '../mui/Downshift';
-import * as actions from '../redux/actions/companies';
+import * as actions from '../redux/actions/users';
 
 /**
  * Formikのvalues
  */
 export interface FormValues {
-  companyId: number | null;
+  userId: number | null;
   beginDate: Date | null;
   selectValue: number | null;
   numberInput: number | null;
@@ -30,7 +30,7 @@ export interface OtherProps {
   submit: (values: FormValues) => void;
 }
 
-const companies = [
+const users = [
   {
     label: 'aaa',
     value: 1
@@ -56,19 +56,19 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
   // Effect Hooks
   React.useEffect(() => {
     async function fetchData() {
-      await actions.fetchCompaniesAsync.request();
+      await actions.fetch();
     }
     fetchData();
     console.log('hooks');
-  }, [values.companyId]);
+  }, [values.userId]);
 
   return (
     <form onSubmit={handleSubmit}>
       {/* Downshift */}
       <Field
-        name="companyId"
+        name="userId"
         component={Downshift}
-        items={companies}
+        items={users}
         getInputProps={() => ({
           helperText: 'Helper Text',
           required: true,
@@ -76,7 +76,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
         })}
       />
       <Field
-        name="companyId"
+        name="userId"
         label="Select"
         select
         component={TextField}
@@ -85,7 +85,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
         parse={numberParser}
       >
         <MenuItem value="">なし</MenuItem>
-        {itemsToMenuItems(companies)}
+        {itemsToMenuItems(users)}
       </Field>
       {/* Select */}
       <Field
@@ -97,7 +97,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
         parse={numberParser}
       >
         <MenuItem value="">なし</MenuItem>
-        {itemsToMenuItems(companies)}
+        {itemsToMenuItems(users)}
       </Field>
       {/* DatePicker */}
       <Field
@@ -119,20 +119,20 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
  * 外から見えるProps
  */
 interface MyFormProps {
-  initialCompanyId: number | null;
+  initialUserId: number | null;
   initialBeginDate: Date | null;
   submit: (values: FormValues) => void;
 }
 
 const TestForm = withFormik<MyFormProps, FormValues>({
-  mapPropsToValues: ({ initialCompanyId, initialBeginDate }) => ({
-    companyId: initialCompanyId,
+  mapPropsToValues: ({ initialUserId, initialBeginDate }) => ({
+    userId: initialUserId,
     beginDate: initialBeginDate,
-    selectValue: initialCompanyId,
+    selectValue: initialUserId,
     numberInput: null
   }),
   validationSchema: Yup.object().shape({
-    companyId: Yup.number()
+    userId: Yup.number()
       .nullable()
       .required('必須です'),
     beginDate: Yup.date()

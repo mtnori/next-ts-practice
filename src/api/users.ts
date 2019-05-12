@@ -1,14 +1,8 @@
 import fetcher from './fetcher';
 import { formatUrl } from './apiUtils';
-import { Role } from '../models/Role';
+import { IUser } from '../models/User';
 
-interface User {
-  id: number;
-  name: string;
-  roles: Role[];
-}
-
-type Users = User[];
+type Users = IUser[];
 
 async function getUsers() {
   try {
@@ -21,7 +15,7 @@ async function getUsers() {
 
 async function getUserById(id: number) {
   try {
-    const payload = await fetcher<User>(formatUrl(`/users/${id}`));
+    const payload = await fetcher<IUser>(formatUrl(`/users/${id}`));
     return { payload };
   } catch (error) {
     return { error };

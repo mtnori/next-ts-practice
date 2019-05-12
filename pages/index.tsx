@@ -3,27 +3,27 @@
  */
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { RootState } from 'typesafe-actions';
+import { RootState } from '../src/redux/reducers';
 
-import { Company } from '../src/models/Company';
+import { IUser } from '../src/models/User';
 import withRoot from '../src/hoc/withRoot';
 import TestForm from '../src/components/TestForm';
-import companiesSelector from '../src/redux/selectors/companies';
+import * as usersSelector from '../src/redux/selectors/users';
 
 import { InjectedProps as AuthInjectedProps } from '../src/hoc/withAuth';
 import { InjectedProps as PermissionInjectedProps } from '../src/hoc/withPermission';
 
 // Props
 interface Props extends AuthInjectedProps, PermissionInjectedProps {
-  companies: Company[];
+  users: IUser[];
 }
 
 const Page: React.FC<Props> = (props: Props) => {
-  const { companies } = props;
-  console.log(companies);
+  const { users } = props;
+  console.log(users);
   return (
     <TestForm
-      initialCompanyId={1}
+      initialUserId={1}
       initialBeginDate={new Date()}
       submit={value => {
         console.log(JSON.stringify(value));
@@ -33,7 +33,7 @@ const Page: React.FC<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: RootState) => ({
-  companies: companiesSelector.getCompaniesResult(state)
+  users: usersSelector.getUsers(state)
 });
 
 export default connect(mapStateToProps)(

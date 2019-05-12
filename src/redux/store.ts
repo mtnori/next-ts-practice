@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer, { RootState } from './reducers';
-// import rootSaga from './sagas';
+import rootSaga from './sagas';
 
 const initialData = {
   users: [] as string[],
@@ -28,7 +28,8 @@ const configureStore = (initialState: RootState = initialData) => {
     applyMiddleware(sagaMiddleware)
   );
 
-  // store.sagaTask = sagaMiddleware.run(rootSaga);
+  // sagaTaskがないとされてしまうので一旦anyにする
+  (store as any).sagaTask = sagaMiddleware.run(rootSaga);
 
   return store;
 };

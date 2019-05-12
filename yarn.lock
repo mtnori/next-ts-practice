@@ -884,6 +884,14 @@
   version "4.14.123"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.123.tgz#39be5d211478c8dd3bdae98ee75bb7efe4abfe4d"
 
+"@types/next-redux-saga@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/next-redux-saga/-/next-redux-saga-3.0.1.tgz#af118827c3e8efaa0a877e69ada5f38c81bee98a"
+  integrity sha512-kAZii48KS7iQ3DXw9X2jalHKZfHmUu3ZFTZAqyz4PtjBYgviIJ0iw3o5RhLdJOjkgIqYJ0skpoR0xoNCsghhqw==
+  dependencies:
+    "@types/react" "*"
+    redux "^3.6.0"
+
 "@types/next-redux-wrapper@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@types/next-redux-wrapper/-/next-redux-wrapper-2.0.2.tgz#ab74f5988911b3403c4da91c6d7dabac4aa2f9fb"

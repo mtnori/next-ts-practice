@@ -1,8 +1,8 @@
 import fetcher from './fetcher';
 import { formatUrl } from './apiUtils';
-import { Company } from '../models/Company';
+import { ICompany } from '../models/Company';
 
-type Companies = Company[];
+type Companies = ICompany[];
 
 async function getCompanies() {
   try {
@@ -15,7 +15,7 @@ async function getCompanies() {
 
 async function getCompanyById(id: number) {
   try {
-    const payload = await fetcher<Company>(formatUrl(`/companies/${id}`));
+    const payload = await fetcher<ICompany>(formatUrl(`/companies/${id}`));
     return { payload };
   } catch (error) {
     return { error };
