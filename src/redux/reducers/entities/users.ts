@@ -17,13 +17,15 @@ type State = UserEntities;
 
 const initialState = {};
 
+type SuccessAction = { payload: NormalizedData };
+
 const reducer: Reducer<State, RootAction> = (state = initialState, action) => {
   // UnionTypeのままだとpayloadを見つけられないのでType assertionを使う
   if (
-    (<{ payload: NormalizedData }>action).payload &&
-    (<{ payload: NormalizedData }>action).payload.entities
+    (action as SuccessAction).payload &&
+    (action as SuccessAction).payload.entities
   ) {
-    const { users } = (<{ payload: NormalizedData }>action).payload.entities;
+    const { users } = (action as SuccessAction).payload.entities;
     if (users) {
       return mergeEntities<State>(state, users);
     }

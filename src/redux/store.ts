@@ -6,9 +6,7 @@ import rootSaga from './sagas';
 const initialData = {
   users: [] as string[],
   entities: {
-    companies: {},
-    users: {},
-    roles: {}
+    users: {}
   }
 };
 
