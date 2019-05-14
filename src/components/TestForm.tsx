@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import NotificationContext from './NotificationContext';
+import TokenContext from './TokenContext';
 
 import TextField from '../mui/TextField';
 import NumberField from '../mui/NumberField';
@@ -56,6 +57,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
 
   // Contextから取得する
   const { addNotification } = useContext(NotificationContext);
+  const token = useContext(TokenContext);
 
   const numberParser = (value: any) => value || null;
 
@@ -126,6 +128,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
       <div>{JSON.stringify(values)}</div>
       <div>{JSON.stringify(touched)}</div>
       <div>{JSON.stringify(errors)}</div>
+      <div>{`Token:${token}`}</div>
     </form>
   );
 };

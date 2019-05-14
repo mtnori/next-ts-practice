@@ -86,7 +86,6 @@ const withAppBar = <P extends {}>(
               </Typography>
               <AuthContext.Consumer>
                 {value =>
-                  value &&
                   value.name && (
                     <div>
                       <IconButton

@@ -7,6 +7,12 @@ import nextCookie from 'next-cookies';
 import cookie from 'js-cookie';
 import { NextComponentType } from 'next';
 
+import TokenContext, { Token } from '../components/TokenContext';
+
+interface WithTokenProps {
+  token: Token;
+}
+
 export const login = async ({ token }: { token: string }) => {
   cookie.set('token', token, { expires: 1 });
   Router.push('/');
@@ -49,7 +55,7 @@ const getDisplayName = (Component: any) =>
 const withAuthSync = <P extends {}>(
   WrappedComponent: NextComponentType<P, any, any>
 ) =>
-  class extends React.Component<P> {
+  class extends React.Component<P & WithTokenProps> {
     static displayName = `withAuthSync(${getDisplayName(WrappedComponent)})`;
 
     static async getInitialProps(ctx: any) {
@@ -60,7 +66,7 @@ const withAuthSync = <P extends {}>(
           WrappedComponent.getInitialProps &&
           (await WrappedComponent.getInitialProps(ctx));
 
-        return { ...componentProps };
+        return { ...componentProps, token };
       }
       return null;
     }
@@ -82,7 +88,12 @@ const withAuthSync = <P extends {}>(
     };
 
     render() {
-      return <WrappedComponent {...this.props as P} />;
+      const { token, ...props } = this.props;
+      return (
+        <TokenContext.Provider value={token}>
+          <WrappedComponent {...props as P} />
+        </TokenContext.Provider>
+      );
     }
   };
 export default withAuthSync;
