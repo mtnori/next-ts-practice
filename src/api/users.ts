@@ -6,19 +6,19 @@ type Users = IUser[];
 
 async function getUsers() {
   try {
-    const payload = await fetcher<Users>(formatUrl('/users'));
-    return { payload };
+    const response = await fetcher<Users>(formatUrl('/users'));
+    return response;
   } catch (error) {
-    return { error };
+    throw error;
   }
 }
 
 async function getUserById(id: number) {
   try {
-    const payload = await fetcher<IUser>(formatUrl(`/users/${id}`));
-    return { payload };
+    const response = await fetcher<IUser>(formatUrl(`/users/${id}`));
+    return response;
   } catch (error) {
-    return { error };
+    throw error;
   }
 }
 

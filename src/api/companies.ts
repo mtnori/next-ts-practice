@@ -9,7 +9,7 @@ async function getCompanies() {
     const payload = await fetcher<Companies>(formatUrl('/companies'));
     return { payload };
   } catch (error) {
-    return { error };
+    throw error;
   }
 }
 
@@ -18,7 +18,7 @@ async function getCompanyById(id: number) {
     const payload = await fetcher<ICompany>(formatUrl(`/companies/${id}`));
     return { payload };
   } catch (error) {
-    return { error };
+    throw error;
   }
 }
 

@@ -20,7 +20,6 @@ const initialState = {};
 type SuccessAction = { payload: NormalizedData };
 
 const reducer: Reducer<State, RootAction> = (state = initialState, action) => {
-  console.log(action);
   // UnionTypeのままだとpayloadを見つけられないのでType assertionを使う
   if (
     (action as SuccessAction).payload &&
@@ -28,7 +27,6 @@ const reducer: Reducer<State, RootAction> = (state = initialState, action) => {
   ) {
     const { users } = (action as SuccessAction).payload.entities;
     if (users) {
-      console.log('merge users entities');
       return mergeEntities<State>(state, users);
     }
   }

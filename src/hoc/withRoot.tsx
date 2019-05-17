@@ -12,6 +12,6 @@ const withRoot = ({ permissions = [] }: Options) => <P extends {}>(
 ) =>
   withAuthSync(withPermission({ permissions })(withAppBar(
     WrappedComponent
-  ) as any) as any);
+  )));
 
 export default withRoot;
