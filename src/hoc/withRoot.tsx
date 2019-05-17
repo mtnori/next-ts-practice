@@ -10,8 +10,6 @@ import withAppBar from './withAppBar';
 const withRoot = ({ permissions = [] }: Options) => <P extends {}>(
   WrappedComponent: NextComponentType<P, any, any>
 ) =>
-  withAuthSync(withPermission({ permissions })(withAppBar(
-    WrappedComponent
-  )));
+  withAuthSync(withPermission({ permissions })(withAppBar(WrappedComponent)));
 
 export default withRoot;

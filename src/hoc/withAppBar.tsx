@@ -127,5 +127,5 @@ const withAppBar = <P extends {}>(
   };
 
 // TODO どうしても型が一致しないのでanyで回避している
-export default (component: NextComponentType<any, any, any>) =>
+export default (component: NextComponentType<{}, any, any>) =>
   withStyles(styles)(withAppBar(component));
