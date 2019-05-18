@@ -7,7 +7,6 @@ import getConfig from 'next/config';
 import withAppBar from '../src/hoc/withAppBar';
 import { login } from '../src/hoc/withAuth';
 import * as authAPI from '../src/api/auth';
-import { fetch as fetchUsers } from '../src/redux/actions/users';
 import NotificationContext from '../src/components/NotificationContext';
 
 const { publicRuntimeConfig } = getConfig();
@@ -53,9 +52,6 @@ const Login = () => {
       <button type="submit">Login</button>
     </form>
   );
-};
-Login.getInitialProps = async ({ store }: any) => {
-  store.dispatch(fetchUsers());
 };
 
 export default withAppBar(Login);

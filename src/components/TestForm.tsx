@@ -9,6 +9,7 @@ import { Field, withFormik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import createStyles from '@material-ui/core/styles/createStyles';
@@ -167,6 +168,9 @@ const InnerForm = (
         <div>{JSON.stringify(touched)}</div>
         <div>{JSON.stringify(errors)}</div>
         <div>{`Token:${token}`}</div>
+        <Button type="submit" variant="contained">
+          送信
+        </Button>
       </form>
     </Paper>
   );
@@ -200,6 +204,7 @@ const formikEnhancer = withFormik<
       .required('必須です')
   }),
   handleSubmit: (values, { props, setSubmitting }) => {
+    console.log('submitted');
     setTimeout(() => {
       props.submit(values);
       setSubmitting(false);

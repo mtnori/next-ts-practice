@@ -1,19 +1,25 @@
 /**
  * @fileoverview フォームテスト
  */
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { connect } from 'react-redux';
+import Router from 'next/router';
+import { NextPage } from 'next';
+import usePrevious from '../src/hooks/usePrevious';
 
 import { RootState } from '../src/redux/reducers';
-
-import withRoot from '../src/hoc/withRoot';
 import * as usersSelector from '../src/redux/selectors/users';
 
+import NotificationContext from '../src/components/NotificationContext';
 import TestForm from '../src/components/TestForm';
 
+import { fetch as fetchUsers } from '../src/redux/actions/users';
+
+import withRoot from '../src/hoc/withRoot';
+
 const mapStateToProps = (state: RootState) => ({
-  users: usersSelector.getUsers(state)
+  fetchStatus: usersSelector.getFetchStatus(state)
 });
 
 type ReduxType = ReturnType<typeof mapStateToProps>;
@@ -21,9 +27,25 @@ type ReduxType = ReturnType<typeof mapStateToProps>;
 // Props
 interface Props {}
 
-const Page = (props: Props & ReduxType) => {
-  const { users } = props;
-  console.log(users);
+const Page: NextPage<Props & ReduxType> = (props: Props & ReduxType) => {
+  const { addNotification } = useContext(NotificationContext);
+
+  const { fetchStatus } = props;
+  const prevFetchStatus = usePrevious(fetchStatus);
+
+  useEffect(() => {
+    if (prevFetchStatus !== undefined) {
+      if (prevFetchStatus.submitting && !fetchStatus.submitting) {
+        addNotification({
+          level: 'success',
+          title: '送信成功',
+          message: '送信成功しました'
+        });
+        Router.push('/');
+      }
+    }
+  }, [addNotification, fetchStatus, prevFetchStatus]);
+
   return (
     <TestForm
       initialUserId={1}
@@ -33,6 +55,10 @@ const Page = (props: Props & ReduxType) => {
       }}
     />
   );
+};
+Page.getInitialProps = async ({ store }: any) => {
+  store.dispatch(fetchUsers());
+  return {} as Props & ReduxType;
 };
 
 export default connect(mapStateToProps)(

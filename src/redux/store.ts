@@ -8,6 +8,11 @@ const initialData = {
   entities: {
     users: {},
     roles: {}
+  },
+  fetchStatus: {
+    users: {
+      submitting: false
+    }
   }
 };
 

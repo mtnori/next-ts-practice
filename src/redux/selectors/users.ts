@@ -12,6 +12,8 @@ const getResult = (state: RootState) => state.users;
 
 const getEntities = (state: RootState) => state.entities;
 
+export const getFetchStatus = (state: RootState) => state.fetchStatus.users;
+
 export const getUsers = createSelector<
   RootState,
   string[],
