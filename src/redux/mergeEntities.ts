@@ -1,9 +1,16 @@
 /**
  * @fileoverview Entities resultをマージする
  */
-import { merge } from 'lodash';
+import { isArray, mergeWith } from 'lodash';
+
+const customizer = (a: any, b: any) => {
+  if (isArray(a)) {
+    return b;
+  }
+  return undefined;
+};
 
 const mergeEntities = <T>(state: T, entities: Partial<T>): T =>
-  merge(state, entities);
+  mergeWith(state, entities, customizer);
 
 export default mergeEntities;

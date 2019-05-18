@@ -22,3 +22,16 @@ export const getUsers = createSelector<
   getEntities,
   (result, entities) => denormalize(result, [schemas.user], entities)
 );
+
+export const getUsersItem = createSelector<
+  RootState,
+  IUser[],
+  { label: string; value: number }[]
+>(
+  getUsers,
+  users =>
+    users.map(user => ({
+      label: user.name,
+      value: user.id
+    }))
+);

@@ -3399,14 +3399,14 @@ formik-material-ui@^0.0.16:
   resolved "https://registry.yarnpkg.com/formik-material-ui/-/formik-material-ui-0.0.16.tgz#bb56f46589df94d97d2f4be362d743b26143dd44"
   integrity sha512-LVv7WG5o5VmKa2K1JUhr/NbCzgzlZrZXEUOXH57P44zVE+R8cOELy5U4RV7VU5lLQW4sq5nlBatW01WrqtfoDQ==
 
-formik@^1.5.4:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/formik/-/formik-1.5.4.tgz#e2e3182d030134a1bf7fddfb394290660212475c"
-  integrity sha512-m7Tboq9O6MntCM8+J/b3jGGKXNXRq1dTzLvEdujSySejlewqVeYLy/goulrvr152wPe9ycKV0NlFSQ8Q1EwycQ==
+formik@^1.5.6:
+  version "1.5.6"
+  resolved "https://registry.yarnpkg.com/formik/-/formik-1.5.6.tgz#60a00894fe9c162f3631ded83ca7cb866c74d939"
+  integrity sha512-gP4eh/GS173RV/K1dmG0zL0T+DoMVaKH1i2+yKFmG6Tfdvd/HlsVcVY28bgvHA/IxdHPmcVVTr2KVRe1tSRj2w==
   dependencies:
     create-react-context "^0.2.2"
     deepmerge "^2.1.1"
-    hoist-non-react-statics "^2.5.5"
+    hoist-non-react-statics "^3.3.0"
     lodash "^4.17.11"
     lodash-es "^4.17.11"
     prop-types "^15.6.1"
@@ -3712,7 +3712,7 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0, hoist-non-react-statics@^2.5.5:
+hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
@@ -4738,10 +4738,10 @@ methods@~1.1.2:
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
   integrity sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4=
 
-microevent.ts@~0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/microevent.ts/-/microevent.ts-0.1.0.tgz#390748b8a515083e6b63cd5112a3f18c2fe0eba8"
-  integrity sha1-OQdIuKUVCD5rY81REqPxjC/g66g=
+microevent.ts@~0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/microevent.ts/-/microevent.ts-0.1.1.tgz#70b09b83f43df5172d0205a63025bce0f7357fa0"
+  integrity sha512-jo1OfR4TaEwd5HOrt5+tAZ9mqT4jmpNAusXtyfNzqVm9uiSYFZlKM1wYL4oU7azZW/PxQW53wM0S6OR1JHNa2g==
 
 micromatch@^3.1.10, micromatch@^3.1.4, micromatch@^3.1.8:
   version "3.1.10"
@@ -5006,10 +5006,10 @@ next-redux-wrapper@^3.0.0-alpha.2:
   resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-3.0.0-alpha.2.tgz#ccbcd362e9998a9f582abcc8bfad665686d09cc4"
   integrity sha512-mObX94qAq/1Wno2RF5pHGaH9ZnZ6+1nvjyC7KRRCfrD4AE1KtbavVAHZS48UkPXf25VwTZq98XjVC1qP1CYLTA==
 
-next-server@8.1.1-canary.32:
-  version "8.1.1-canary.32"
-  resolved "https://registry.yarnpkg.com/next-server/-/next-server-8.1.1-canary.32.tgz#27ab14956f3c27924ab27c1e1053a88994b7ac4c"
-  integrity sha512-d75+XvjQuJjh8eanVoW/cIB5ocq465aoDqUf3uFhroBQy0HfG9ucAMBszsHXJgmqS/EQnKOALmwbom+c+1f0jQ==
+next-server@8.1.1-canary.33:
+  version "8.1.1-canary.33"
+  resolved "https://registry.yarnpkg.com/next-server/-/next-server-8.1.1-canary.33.tgz#ce9ca12f4762444ef84f1fb244aa34facf9ac1aa"
+  integrity sha512-T9/tNrHTlMNB+0xpx0FMQt7kwoPYnFOJ3ZwoKwCN6HuqfZWRjROGBAWxJyAiNCeM/scO9WUksL4ACp9+OO5C2w==
   dependencies:
     amp-toolbox-optimizer "0.5.3"
     etag "1.8.1"
@@ -5023,9 +5023,9 @@ next-server@8.1.1-canary.32:
     url "0.11.0"
 
 next@next:
-  version "8.1.1-canary.32"
-  resolved "https://registry.yarnpkg.com/next/-/next-8.1.1-canary.32.tgz#a5909722bf1a5020c23928242322a17be1e1e8c9"
-  integrity sha512-vrzIVQ24nGk1OlQBPQRva4X8wXvIZ8b53Qi1SO/jYxhR535SdjU435sGRNK9AwQByEJRsb08JbZ88IC+P1l1eg==
+  version "8.1.1-canary.33"
+  resolved "https://registry.yarnpkg.com/next/-/next-8.1.1-canary.33.tgz#efb1dad76f5a06d0f5ffc8a6f1e71a4c7c1231b2"
+  integrity sha512-wpKRqUSuU5UjSMB4hlZe48pmBlO0YOi350VGtQUGuXlu9qD1ighpVWtXE7r3R0S8hmUeePZ2t4AygBFiEjnrLA==
   dependencies:
     "@babel/core" "7.1.2"
     "@babel/plugin-proposal-class-properties" "7.1.0"
@@ -5053,7 +5053,7 @@ next@next:
     launch-editor "2.2.1"
     loader-utils "1.1.0"
     mkdirp "0.5.1"
-    next-server "8.1.1-canary.32"
+    next-server "8.1.1-canary.33"
     prop-types "15.6.2"
     prop-types-exact "1.2.0"
     react-error-overlay "5.1.4"
@@ -7560,11 +7560,11 @@ worker-farm@^1.7.0:
     errno "~0.1.7"
 
 worker-rpc@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/worker-rpc/-/worker-rpc-0.1.0.tgz#5f1258dca3d617cd18ca86587f8a05ac0eebd834"
-  integrity sha1-XxJY3KPWF80YyoZYf4oFrA7r2DQ=
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/worker-rpc/-/worker-rpc-0.1.1.tgz#cb565bd6d7071a8f16660686051e969ad32f54d5"
+  integrity sha512-P1WjMrUB3qgJNI9jfmpZ/htmBEjFh//6l/5y8SD9hg1Ef5zTTVVoRjTrTEzPrNBQvmhMxkoTsjOXN10GWU7aCg==
   dependencies:
-    microevent.ts "~0.1.0"
+    microevent.ts "~0.1.1"
 
 wrap-ansi@^2.0.0:
   version "2.1.0"
