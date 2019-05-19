@@ -102,16 +102,24 @@ const InnerForm = (
 
   const isInitialMount = useRef(true);
 
+  // componentDidMountと同じ動作
+  useEffect(() => {
+    async function fetchData() {
+      getUsers();
+    }
+    fetchData();
+  }, [getUsers]);
+
   // Effect Hooks
   // 直接store.dispatchへはアクセスできないので、connect経由でpropsへinjectする
   useEffect(() => {
     async function fetchData() {
       getUsers();
     }
-    // componentDidUpdateと同じ動作にする
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
+      // componentDidUpdateと同じ動作にする
       fetchData();
       // メッセージを発火させる
       addNotification({ message: 'Redux SagaのTaskがFire', level: 'success' });

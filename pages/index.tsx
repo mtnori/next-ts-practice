@@ -19,15 +19,11 @@ import NotificationContext from '../src/components/NotificationContext';
 import TokenContext from '../src/components/TokenContext';
 import TestForm from '../src/components/TestForm';
 
-import {
-  fetch as fetchUsers,
-  create as createUser
-} from '../src/redux/actions/users';
+import { create as createUser } from '../src/redux/actions/users';
 
 import withRoot from '../src/hoc/withRoot';
 
 const mapStateToProps = (state: RootState) => ({
-  users: usersSelector.getUsersItem(state),
   fetchStatus: usersSelector.getFetchStatus(state)
 });
 
@@ -43,7 +39,7 @@ type ReduxType = ReturnType<typeof mapStateToProps> &
 interface Props {}
 
 const Page: NextPage<Props & ReduxType> = (props: Props & ReduxType) => {
-  const { submit, fetchStatus, users } = props;
+  const { submit, fetchStatus } = props;
   const { addNotification } = useContext(NotificationContext);
   const token = useContext(TokenContext);
 
@@ -63,8 +59,6 @@ const Page: NextPage<Props & ReduxType> = (props: Props & ReduxType) => {
     }
   }, [addNotification, fetchStatus, prevFetchStatus]);
 
-  console.log(users);
-
   return (
     <>
       <TestForm
@@ -74,10 +68,6 @@ const Page: NextPage<Props & ReduxType> = (props: Props & ReduxType) => {
       />
     </>
   );
-};
-Page.getInitialProps = async ({ store }: any) => {
-  store.dispatch(fetchUsers());
-  return {} as Props & ReduxType;
 };
 
 export default connect(
