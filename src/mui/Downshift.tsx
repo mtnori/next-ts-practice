@@ -88,7 +88,7 @@ class Downshift extends React.Component<DownshiftProps, State> {
     const inputValue = selectedItem ? selectedItem.label : '';
 
     this.state = {
-      selectedItem,
+      selectedItem: selectedItem || null,
       inputValue
     };
   }
@@ -115,7 +115,7 @@ class Downshift extends React.Component<DownshiftProps, State> {
 
       const inputValue = selectedItem ? selectedItem.label : '';
       return {
-        selectedItem,
+        selectedItem: selectedItem || null,
         inputValue
       };
     }

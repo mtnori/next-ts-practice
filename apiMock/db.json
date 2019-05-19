@@ -1,9 +1,9 @@
 {
-  "get_loadAuth": { "id": 1, "name": "noriyuki", "permissions": [
+  "loadAuth": { "id": 1, "name": "noriyuki", "permissions": [
       "VIEW"
     ]
   },
-  "post_login": { "token": "1234567890" },
+  "login_post": { "token": "1234567890" },
   "users": [{
     "id": 1,
     "name": "noriyuki",
@@ -24,6 +24,11 @@
       }
     ]
   }],
+  "users_post": {
+    "id": 3,
+    "name": "nori",
+    "roles": []
+  },
   "companies": [{
     "id":99,
     "name": "company1"

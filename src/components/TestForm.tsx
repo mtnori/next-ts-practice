@@ -14,6 +14,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import createStyles from '@material-ui/core/styles/createStyles';
 
+import { IUserDTO } from '../models/User';
 import { RootState } from '../redux/reducers';
 import { RootAction } from '../redux/actions';
 import * as usersSelector from '../redux/selectors/users';
@@ -117,6 +118,8 @@ const InnerForm = (
     }
   }, [addNotification, getUsers, values.userId]);
 
+  console.log(users);
+
   return (
     <Paper className={classes.container}>
       <form onSubmit={handleSubmit}>
@@ -182,7 +185,7 @@ const InnerForm = (
 interface MyFormProps {
   initialUserId: number | null;
   initialBeginDate: Date | null;
-  submit: (values: FormValues) => void;
+  submit: (data: IUserDTO) => void;
 }
 
 const formikEnhancer = withFormik<
@@ -203,10 +206,10 @@ const formikEnhancer = withFormik<
       .nullable()
       .required('必須です')
   }),
-  handleSubmit: (values, { props, setSubmitting }) => {
+  handleSubmit: (_ /* values */, { props, setSubmitting }) => {
     console.log('submitted');
     setTimeout(() => {
-      props.submit(values);
+      props.submit({ id: null, name: 'nori' });
       setSubmitting(false);
     }, 1000);
   }

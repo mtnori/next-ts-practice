@@ -6,15 +6,23 @@ import React, { useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Router from 'next/router';
 import { NextPage } from 'next';
+import { Dispatch } from 'redux';
+import { RootAction } from '../src/redux/actions';
 import usePrevious from '../src/hooks/usePrevious';
+
+import { IUserDTO } from '../src/models/User';
 
 import { RootState } from '../src/redux/reducers';
 import * as usersSelector from '../src/redux/selectors/users';
 
 import NotificationContext from '../src/components/NotificationContext';
+import TokenContext from '../src/components/TokenContext';
 import TestForm from '../src/components/TestForm';
 
-import { fetch as fetchUsers } from '../src/redux/actions/users';
+import {
+  fetch as fetchUsers,
+  create as createUser
+} from '../src/redux/actions/users';
 
 import withRoot from '../src/hoc/withRoot';
 
@@ -22,20 +30,28 @@ const mapStateToProps = (state: RootState) => ({
   fetchStatus: usersSelector.getFetchStatus(state)
 });
 
-type ReduxType = ReturnType<typeof mapStateToProps>;
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>) => ({
+  submit: (token: string) => (data: IUserDTO) =>
+    dispatch(createUser(data, token))
+});
+
+type ReduxType = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 // Props
 interface Props {}
 
 const Page: NextPage<Props & ReduxType> = (props: Props & ReduxType) => {
+  const { submit, fetchStatus } = props;
   const { addNotification } = useContext(NotificationContext);
+  const token = useContext(TokenContext);
 
-  const { fetchStatus } = props;
   const prevFetchStatus = usePrevious(fetchStatus);
 
+  // メッセージを表示するEffect Hook
   useEffect(() => {
     if (prevFetchStatus !== undefined) {
-      if (prevFetchStatus.submitting && !fetchStatus.submitting) {
+      if (prevFetchStatus.saving && !fetchStatus.saving && fetchStatus.saved) {
         addNotification({
           level: 'success',
           title: '送信成功',
@@ -47,13 +63,13 @@ const Page: NextPage<Props & ReduxType> = (props: Props & ReduxType) => {
   }, [addNotification, fetchStatus, prevFetchStatus]);
 
   return (
-    <TestForm
-      initialUserId={1}
-      initialBeginDate={new Date()}
-      submit={(value: any) => {
-        console.log(JSON.stringify(value));
-      }}
-    />
+    <>
+      <TestForm
+        initialUserId={1}
+        initialBeginDate={new Date()}
+        submit={submit(token)}
+      />
+    </>
   );
 };
 Page.getInitialProps = async ({ store }: any) => {
@@ -61,6 +77,7 @@ Page.getInitialProps = async ({ store }: any) => {
   return {} as Props & ReduxType;
 };
 
-export default connect(mapStateToProps)(
-  withRoot({ permissions: ['VIEW'] })(Page)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRoot({ permissions: ['VIEW'] })(Page));

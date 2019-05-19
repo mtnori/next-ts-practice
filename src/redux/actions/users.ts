@@ -1,7 +1,15 @@
 /**
  * @fileoverview Users Action creator
  */
-import { FETCH, FETCH_SUCCESS, FETCH_FAILURE } from '../constants/users';
+import { IUserDTO } from '../../models/User';
+import {
+  FETCH,
+  FETCH_SUCCESS,
+  FETCH_FAILURE,
+  CREATE,
+  CREATE_SUCCESS,
+  CREATE_FAILURE
+} from '../constants/users';
 import { NormalizedData } from '../NormalizedData';
 
 export const fetch = () => ({
@@ -18,7 +26,26 @@ export const fetchFailure = (error: Error) => ({
   error
 });
 
+export const create = (data: IUserDTO, token: string) => ({
+  type: CREATE as typeof CREATE,
+  payload: data,
+  meta: { token }
+});
+
+export const createSuccess = (payload: NormalizedData) => ({
+  type: CREATE_SUCCESS as typeof CREATE_SUCCESS,
+  payload
+});
+
+export const createFailure = (error: Error) => ({
+  type: CREATE_FAILURE as typeof CREATE_FAILURE,
+  error
+});
+
 export type UsersActions =
   | ReturnType<typeof fetch>
   | ReturnType<typeof fetchSuccess>
-  | ReturnType<typeof fetchFailure>;
+  | ReturnType<typeof fetchFailure>
+  | ReturnType<typeof create>
+  | ReturnType<typeof createSuccess>
+  | ReturnType<typeof createFailure>;

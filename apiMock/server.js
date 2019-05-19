@@ -7,8 +7,7 @@ const middlewares = jsonServer.defaults();
 // routes.jsonの内容をここに記載
 server.use(
   jsonServer.rewriter({
-    '/loadAuth': '/get_loadAuth',
-    '/login': '/post_login'
+    '/loadAuth': '/loadAuth'
   })
 );
 
@@ -19,6 +18,7 @@ server.use((req, res, next) => {
   if (req.method === 'POST') {
     // POST送信を受ける場合、受けたPOSTレスポンスをGETに変更する
     req.method = 'GET';
+    req.url += '_post'; // アクセス先をPOST用に変更
     // req.query = req.body;
   }
   // Continue to JSON Server router

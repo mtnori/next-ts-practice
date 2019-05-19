@@ -6,3 +6,8 @@ export interface IUser {
   name: string;
   roles: import('./Role').IRole;
 }
+
+export interface IUserDTO {
+  id: number | null;
+  name: string;
+}

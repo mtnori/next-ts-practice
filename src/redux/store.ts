@@ -11,7 +11,10 @@ const initialData = {
   },
   fetchStatus: {
     users: {
-      submitting: false
+      loaded: false,
+      loading: false,
+      saved: false,
+      saving: false
     }
   }
 };
