@@ -1,2 +1,2 @@
 # next-ts
-Next.js, Formik, Redux, Immutable.js and TypeScript sandbox
+Next.js, Formik, Redux, Material UI and TypeScript sandbox
