@@ -19,7 +19,10 @@ import NotificationContext from '../src/components/NotificationContext';
 import TokenContext from '../src/components/TokenContext';
 import TestForm from '../src/components/TestForm';
 
-import { create as createUser } from '../src/redux/actions/users';
+import {
+  fetch as fetchUser,
+  create as createUser
+} from '../src/redux/actions/users';
 
 import withRoot from '../src/hoc/withRoot';
 
@@ -68,6 +71,10 @@ const Page: NextPage<Props & ReduxType> = (props: Props & ReduxType) => {
       />
     </>
   );
+};
+Page.getInitialProps = async ({ store }: any) => {
+  store.dispatch(fetchUser());
+  return {} as Props & ReduxType;
 };
 
 export default connect(

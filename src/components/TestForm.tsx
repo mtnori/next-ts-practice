@@ -103,12 +103,14 @@ const InnerForm = (
   const isInitialMount = useRef(true);
 
   // componentDidMountと同じ動作
+  /*
   useEffect(() => {
     async function fetchData() {
       getUsers();
     }
     fetchData();
   }, [getUsers]);
+   */
 
   // Effect Hooks
   // 直接store.dispatchへはアクセスできないので、connect経由でpropsへinjectする
