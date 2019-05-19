@@ -24,10 +24,7 @@ import {
   create as createUser
 } from '../src/redux/actions/users';
 
-import withRoot from '../src/hoc/withRoot';
-
 const mapStateToProps = (state: RootState) => ({
-  users: usersSelector.getUsersItem(state),
   fetchStatus: usersSelector.getFetchStatus(state)
 });
 
@@ -43,7 +40,7 @@ type ReduxType = ReturnType<typeof mapStateToProps> &
 interface Props {}
 
 const Page: NextPage<Props & ReduxType> = (props: Props & ReduxType) => {
-  const { submit, fetchStatus, users } = props;
+  const { submit, fetchStatus } = props;
   const { addNotification } = useContext(NotificationContext);
   const token = useContext(TokenContext);
 
@@ -63,8 +60,6 @@ const Page: NextPage<Props & ReduxType> = (props: Props & ReduxType) => {
     }
   }, [addNotification, fetchStatus, prevFetchStatus]);
 
-  console.log(users);
-
   return (
     <>
       <TestForm
@@ -83,4 +78,4 @@ Page.getInitialProps = async ({ store }: any) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRoot({ permissions: ['VIEW'] })(Page));
+)(Page);

@@ -118,8 +118,6 @@ const InnerForm = (
     }
   }, [addNotification, getUsers, values.userId]);
 
-  console.log(users);
-
   return (
     <Paper className={classes.container}>
       <form onSubmit={handleSubmit}>
