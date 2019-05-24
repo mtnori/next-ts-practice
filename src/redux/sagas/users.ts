@@ -49,5 +49,5 @@ export function* createTask() {
 }
 
 // FETCHが実行されるたびにindexタスクを起動する
-const saga = [takeEvery(FETCH, indexTask)];
+const saga = [takeEvery(FETCH, indexTask), takeEvery(CREATE, createTask)];
 export default saga;

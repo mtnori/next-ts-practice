@@ -17,7 +17,7 @@ import * as usersSelector from '../src/redux/selectors/users';
 
 import NotificationContext from '../src/components/NotificationContext';
 import TokenContext from '../src/components/TokenContext';
-import TestForm from '../src/components/TestForm';
+import TestForm from '../src/components/TestForm2';
 
 import {
   fetch as fetchUser,
