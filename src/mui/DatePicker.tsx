@@ -2,8 +2,10 @@
  * @fileoverview Formik wrapper of DatePicker component
  */
 import * as React from 'react';
-import MuiDatePicker from 'material-ui-pickers/DatePicker';
-import { DatePickerProps as MuiDatePickerProps } from 'material-ui-pickers';
+import {
+  DatePicker as MuiDatePicker,
+  DatePickerProps as MuiDatePickerProps
+} from '@material-ui/pickers';
 import { FieldProps, getIn } from 'formik';
 import { Omit } from '../types';
 
