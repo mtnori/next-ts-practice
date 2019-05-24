@@ -2,7 +2,7 @@
  * @fileoverview Role Model
  */
 export interface IRole {
-  id: number;
+  id: number | null;
   name: string;
   users: import('./User').IUser[];
 }

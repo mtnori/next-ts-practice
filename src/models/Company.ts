@@ -2,6 +2,6 @@
  * @fileoverview Company Model
  */
 export interface ICompany {
-  id: number;
+  id: number | null;
   name: string;
 }

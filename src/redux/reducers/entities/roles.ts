@@ -4,11 +4,15 @@
 import { Reducer } from 'redux';
 
 import { RootAction } from '../../actions';
-import { NormalizedData } from '../../NormalizedData';
 import mergeEntities from '../../mergeEntities';
 import { IRole } from '../../../models/Role';
 
-interface RoleEntity extends IRole {}
+import isSuccessAction from '../../isSuccessAction';
+import { Omit } from '../../../types';
+
+interface RoleEntity extends Omit<IRole, 'users'> {
+  users?: string[];
+}
 interface RoleEntities {
   [key: string]: RoleEntity;
 }
@@ -17,15 +21,9 @@ type State = RoleEntities;
 
 const initialState = {};
 
-type SuccessAction = { payload: NormalizedData };
-
 const reducer: Reducer<State, RootAction> = (state = initialState, action) => {
-  // UnionTypeのままだとpayloadを見つけられないのでType assertionを使う
-  if (
-    (action as SuccessAction).payload &&
-    (action as SuccessAction).payload.entities
-  ) {
-    const { roles } = (action as SuccessAction).payload.entities;
+  if (isSuccessAction(action)) {
+    const { roles } = action.payload.entities;
     if (roles) {
       return mergeEntities<State>(state, roles);
     }

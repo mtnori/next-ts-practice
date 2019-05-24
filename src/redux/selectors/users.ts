@@ -25,15 +25,31 @@ export const getUsers = createSelector<
   (result, entities) => denormalize(result, [schemas.user], entities)
 );
 
-export const getUsersItem = createSelector<
-  RootState,
-  IUser[],
-  { label: string; value: number }[]
->(
+// この定義は外でも使いたいので、exportしておく
+export interface Item {
+  label: string;
+  value: number;
+}
+
+interface NullableItem {
+  label: string;
+  value: number | null;
+}
+
+// Type Guard
+function notNull(item: Item | NullableItem): item is Item {
+  return item.value !== null;
+}
+
+// Return user item list(notNull)
+// Type Guardを使用したので、valueがnullの値は入ってこない
+export const getUsersItem = createSelector<RootState, IUser[], Item[]>(
   getUsers,
   users =>
-    users.map(user => ({
-      label: user.name,
-      value: user.id
-    }))
+    users
+      .map(user => ({
+        label: user.name,
+        value: user.id
+      }))
+      .filter(notNull)
 );
