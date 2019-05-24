@@ -16,6 +16,18 @@ const initialData = {
       saved: false,
       saving: false
     }
+  },
+  initialDatas: {
+    customers: {
+      id: null,
+      firstName: '',
+      lastName: '',
+      phoneticFirstName: '',
+      phoneticLastName: '',
+      addressId: null,
+      createdAt: null,
+      updatedAt: null
+    }
   }
 };
 

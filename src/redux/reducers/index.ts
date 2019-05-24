@@ -6,11 +6,13 @@ import { combineReducers } from 'redux';
 import users from './users';
 import entities from './entities';
 import fetchStatus from './fetchStatus';
+import initialDatas from './initialDatas';
 
 const rootReducer = combineReducers({
   users,
   entities,
-  fetchStatus
+  fetchStatus,
+  initialDatas
 });
 
 export default rootReducer;
