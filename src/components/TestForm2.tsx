@@ -5,7 +5,14 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
-import { Field, Formik, Form, FormikProps, FormikActions } from 'formik';
+import {
+  Field,
+  FieldProps,
+  Formik,
+  Form,
+  FormikProps,
+  FormikActions
+} from 'formik';
 import * as Yup from 'yup';
 
 import Paper from '@material-ui/core/Paper';
@@ -128,24 +135,29 @@ const InnerForm = (
     <Paper className={classes.container}>
       <Form>
         {/* Downshift */}
-        <Field
-          name="userId"
-          component={Downshift}
-          items={users}
-          getInputProps={() => ({
-            helperText: 'Helper Text',
-            required: true,
-            label: 'Downshift'
-          })}
-        />
+        <Field name="userId">
+          {({ field, form }: FieldProps) => (
+            <Downshift
+              field={field}
+              form={form}
+              items={users}
+              getInputProps={() => ({
+                helperText: 'Helper Text',
+                required: true,
+                label: 'Downshift'
+              })}
+            />
+          )}
+        </Field>
         <Field
           name="userId"
           label="Select"
+          variant="standard"
           select
-          component={TextField}
           InputLabelProps={{ shrink: true }}
           required
           parse={numberParser}
+          component={TextField}
         >
           <MenuItem value="">なし</MenuItem>
           {itemsToMenuItems(users)}

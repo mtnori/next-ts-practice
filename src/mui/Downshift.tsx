@@ -10,11 +10,14 @@ import { Omit } from '../types';
 export interface DownshiftProps
   extends FieldProps,
     Omit<MuiDownshiftProps, 'getInputProps'> {
-  handleSelect: (item: { label: string; value: any } | null) => void;
   getInputProps?: () => Omit<
     InputProps,
     'error' | 'name' | 'onChange' | 'value' // fieldが持っているのでOmit
   >;
+}
+
+interface InnerProps {
+  handleSelect: (item: { label: string; value: any } | null) => void;
 }
 
 /**
@@ -31,7 +34,7 @@ export const fieldToDownshift = ({
   handleSelect,
   getInputProps,
   ...props
-}: DownshiftProps): MuiDownshiftProps => {
+}: DownshiftProps & InnerProps): MuiDownshiftProps => {
   const { name } = field;
   const { touched, errors, isSubmitting, setFieldValue } = form;
 
